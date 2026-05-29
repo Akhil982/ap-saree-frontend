@@ -1,0 +1,41 @@
+<header class="site-header">
+  <div class="header-container">
+    
+    <div class="brand-section">
+      <button class="mobile-menu-btn" (click)="toggleMobileMenu()" aria-label="Toggle Navigation Menu">
+        <span class="hamburger" [class.open]="isMobileMenuOpen"></span>
+      </button>
+      <a routerLink="/" class="logo">ZARI<span>.</span></a>
+    </div>
+
+    <nav class="desktop-nav" [class.mobile-open]="isMobileMenuOpen">
+      <ul>
+        <li><a routerLink="/catalog" [queryParams]="{category: 'all'}" (click)="closeMobileMenu()">All Sarees</a></li>
+        <li><a routerLink="/catalog" [queryParams]="{category: 'banarasi'}" (click)="closeMobileMenu()">Banarasi</a></li>
+        <li><a routerLink="/catalog" [queryParams]="{category: 'kanchipuram'}" (click)="closeMobileMenu()">Kanchipuram</a></li>
+        <li><a routerLink="/catalog" [queryParams]="{category: 'linen'}" (click)="closeMobileMenu()">Linen & Cotton</a></li>
+        <li><a routerLink="/new-arrivals" (click)="closeMobileMenu()">New Arrivals</a></li>
+      </ul>
+    </nav>
+
+    <div class="header-actions">
+      <div class="search-box desktop-only">
+        <input type="text" placeholder="Search weaves, fabrics..." />
+        <span class="search-icon">🔍</span>
+      </div>
+
+      <button class="action-btn theme-toggle" (click)="toggleTheme()" [attr.aria-label]="isDarkMode ? 'Activate Light Mode' : 'Activate Dark Mode'">
+        <span class="mode-icon" *ngIf="isDarkMode">☀️ <small class="theme-text">Light</small></span>
+        <span class="mode-icon" *ngIf="!isDarkMode">🌙 <small class="theme-text">Dark</small></span>
+      </button>
+
+      <a routerLink="/account" class="action-btn profile-link" aria-label="View Account Details">👤</a>
+      
+      <a routerLink="/cart" class="action-btn cart-link" aria-label="View Shopping Cart">
+        🛒
+        <span class="cart-badge" *ngIf="cartCount > 0">{{ cartCount }}</span>
+      </a>
+    </div>
+
+  </div>
+</header>

@@ -1,0 +1,180 @@
+.catalog-container {
+  width: 100%;
+  background-color: transparent;
+}
+
+.layout-wrapper {
+  display: flex;
+  gap: 3.5rem; /* Increased spacing to separate content naturally without borders */
+  margin-top: 1rem;
+}
+
+/* --- Clean, Frameless Sidebar Fix --- */
+.filter-sidebar {
+  width: 240px;
+  flex-shrink: 0;
+  background-color: transparent; /* Strips out the solid box structure entirely */
+  border: none;
+  box-shadow: none;
+  /* Syncs color changes beautifully with the header toggle */
+  transition: color 0.3s ease; 
+  
+  .drawer-header { display: none; }
+
+  .filter-group {
+    /* Subtle horizontal dividers replace the heavy box outline */
+    border-bottom: 1px solid var(--border-color);
+    padding: 1.5rem 0;
+    transition: border-color 0.3s ease;
+
+    h4 {
+      margin: 0 0 1.2rem 0;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--text-primary);
+      transition: color 0.3s ease;
+    }
+
+    label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 0.9rem;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      user-select: none;
+      transition: color 0.2s ease;
+
+      input[type="checkbox"], input[type="radio"] {
+        accent-color: var(--accent);
+        cursor: pointer;
+      }
+
+      &:hover { color: var(--text-primary); }
+    }
+  }
+}
+
+.grid-panel {
+  flex-grow: 1;
+}
+
+.grid-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 1rem;
+  transition: border-color 0.3s ease;
+
+  .results-count {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+  }
+}
+
+.sort-select-dropdown {
+  padding: 8px 16px;
+  background-color: var(--bg-surface);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  outline: none;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+
+  &:focus {
+    border-color: var(--accent);
+  }
+}
+
+/* Seamless Product Grid */
+.saree-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 2rem;
+  background: transparent;
+}
+
+.mobile-action-bar { display: none; }
+
+/* --- Responsive Layout (Handles Mobile Drawer Nicely) --- */
+@media (max-width: 992px) {
+  .desktop-only { display: none; }
+  
+  .mobile-action-bar {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    gap: 1rem;
+
+    .filter-trigger-btn {
+      flex: 1;
+      padding: 12px;
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      color: var(--text-primary);
+      font-weight: 600;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    }
+
+    .sort-select-dropdown { flex: 1; }
+  }
+
+  /* Structural Shift: On mobile viewports, morph filters back into an off-canvas drawer layer */
+  .filter-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 280px;
+    z-index: 2000;
+    background-color: var(--bg-surface); /* Mobile panels look best with solid surfaces over page content */
+    padding: 1.5rem 2rem;
+    box-shadow: 4px 0 25px rgba(0,0,0,0.2);
+    transform: translateX(-100%);
+    /* Handles opening slides and crossfades comfortably */
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
+                background-color 0.3s ease, 
+                color 0.3s ease;
+    overflow-y: auto;
+
+    &.drawer-open { transform: translateX(0); }
+    
+    .drawer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 1rem;
+      margin-bottom: 1rem;
+      transition: border-color 0.3s ease;
+      
+      h3 { margin: 0; font-size: 1.2rem; color: var(--text-primary); transition: color 0.3s ease; }
+      .close-drawer-btn { background: none; border: none; font-size: 1.4rem; color: var(--text-primary); cursor: pointer; transition: color 0.3s ease; }
+    }
+  }
+
+  .drawer-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.4);
+    backdrop-filter: blur(4px);
+    z-index: 1999;
+  }
+
+  .saree-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 1rem;
+  }
+}

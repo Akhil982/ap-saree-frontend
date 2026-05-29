@@ -1,0 +1,33 @@
+<div class="saree-card" [routerLink]="['/product', saree.id]">
+  <div class="image-container">
+    <span class="badge tag-exclusive" *ngIf="saree.isExclusive">Handloom</span>
+    <span class="badge tag-stock" *ngIf="saree.stockCount <= 3 && saree.stockCount > 0">Only {{saree.stockCount}} Left</span>
+    <span class="badge tag-out" *ngIf="saree.stockCount === 0">Out of Stock</span>
+
+    <img [src]="saree.primaryImage" [alt]="saree.title" class="card-img primary" />
+    <img [src]="saree.hoverImage || saree.primaryImage" [alt]="saree.title" class="card-img hover-preview" />
+    
+    <button class="quick-add-btn" [disabled]="saree.stockCount === 0" (click)="onQuickAdd($event)">
+      <span>🛒 Quick Add</span>
+    </button>
+  </div>
+
+  <div class="card-details">
+    <span class="fabric-type">{{ saree.fabric }}</span>
+    <h3 class="product-title">{{ saree.title }}</h3>
+    
+    <div class="price-container">
+      <span class="current-price">₹{{ saree.price | number:'1.0-0' }}</span>
+      <span class="original-price" *ngIf="saree.discountPrice">₹{{ saree.discountPrice | number:'1.0-0' }}</span>
+      <span class="discount-tag" *ngIf="saree.discountPrice">
+        ({{ getDiscountPercentage(saree.price, saree.discountPrice) }}% OFF)
+      </span>
+    </div>
+
+    <div class="color-variants" *ngIf="saree.colors?.length">
+      <span *ngFor="let color of saree.colors" 
+            [style.backgroundColor]="color" 
+            class="color-dot"></span>
+    </div>
+  </div>
+</div>

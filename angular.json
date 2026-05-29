@@ -124,5 +124,8 @@
       }
     }
   },
-  "defaultProject": "ap-saree-frontend"
+  "defaultProject": "ap-saree-frontend",
+  "cli": {
+    "analytics": "fd55926f-e213-47c0-8b6c-9754d13311fd"
+  }
 }

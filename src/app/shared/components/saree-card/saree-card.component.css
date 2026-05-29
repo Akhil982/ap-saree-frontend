@@ -1,0 +1,128 @@
+.saree-card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  overflow: hidden;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+
+    .hover-preview { opacity: 1; }
+    .primary { opacity: 0; }
+    .quick-add-btn { opacity: 1; transform: translateY(0); }
+  }
+}
+
+.image-container {
+  position: relative;
+  width: 100%;
+  padding-bottom: 135%; /* Taller aspect ratio works perfectly for elegant saree drapes */
+  background-color: var(--border-color);
+  overflow: hidden;
+
+  .card-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.4s ease;
+  }
+
+  .hover-preview { opacity: 0; }
+}
+
+.badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 10;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 4px 8px;
+  border-radius: 2px;
+  letter-spacing: 0.5px;
+
+  &.tag-exclusive { background-color: #d4af37; color: #000; } /* Luxury Gold Badge */
+  &.tag-stock { background-color: #ff9800; color: #fff; }
+  &.tag-out { background-color: #555; color: #fff; }
+}
+
+.quick-add-btn {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: var(--bg-primary);
+  border: none;
+  border-top: 1px solid var(--border-color);
+  color: var(--text-primary);
+  padding: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  opacity: 0;
+  transform: translateY(100%);
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: var(--accent);
+    color: white;
+  }
+}
+
+.card-details {
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+
+  .fabric-type {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+  }
+
+  .product-title {
+    font-size: 0.95rem;
+    margin: 0;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--text-primary);
+  }
+}
+
+.price-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+
+  .current-price { font-weight: 700; color: var(--text-primary); }
+  .original-price { text-decoration: line-through; color: var(--text-muted); font-size: 0.85rem; }
+  .discount-tag { color: #4caf50; font-size: 0.8rem; font-weight: 600; }
+}
+
+.color-variants {
+  display: flex;
+  gap: 6px;
+  margin-top: 0.3rem;
+
+  .color-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 1px solid var(--border-color);
+  }
+}

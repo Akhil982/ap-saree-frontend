@@ -1,0 +1,148 @@
+<div class="detail-container">
+  <!-- Highly Accessible Navigation for All Age Groups -->
+  <div class="navigation-header">
+    <button class="back-collection-btn" routerLink="/catalog">
+      <span class="arrow-icon">←</span> Back to Collection
+    </button>
+  </div>
+
+  <div class="detail-layout" *ngIf="product">
+    <!-- Left Column: Interactive Image Gallery Layout -->
+    <section class="gallery-section">
+      <div class="main-stage">
+        <img [src]="activeImage" [alt]="product.title" class="stage-img" />
+        <span class="luxury-tag" *ngIf="product.isHandloom">Authentic Handloom</span>
+      </div>
+      <div class="thumbnail-strip">
+        <button *ngFor="let img of product.images" 
+                class="thumb-btn" 
+                [class.active]="img === activeImage"
+                (click)="setActiveImage(img)">
+          <img [src]="img" alt="Product thumbnail preview" />
+        </button>
+      </div>
+    </section>
+
+    <!-- Right Column: Product Core Details -->
+    <section class="info-section">
+      <span class="fabric-badge">{{ product.fabric }}</span>
+      <h1 class="product-name">{{ product.title }}</h1>
+      
+      <!-- Interactive Rating Row Wrapper -->
+      <div class="rating-summary-bar" *ngIf="product.totalRatingsCount > 0">
+        <div class="stars-badge">
+          <span class="rating-num">{{ product.ratingAverage }}</span>
+          <span class="star-icon">★</span>
+        </div>
+        <span class="rating-count-label">| {{ product.totalRatingsCount }} Authenticated Reviews</span>
+      </div>
+      
+      <div class="price-block">
+        <span class="price-current">₹{{ product.price | number:'1.0-0' }}</span>
+        <ng-container *ngIf="product.originalPrice && product.originalPrice > product.price">
+          <span class="price-original">₹{{ product.originalPrice | number:'1.0-0' }}</span>
+          <span class="discount-percentage">({{ calculateDiscount() }}% OFF)</span>
+        </ng-container>
+      </div>
+      
+      <p class="product-description">{{ product.description }}</p>
+
+      <div class="specs-table">
+        <div class="spec-row">
+          <span class="spec-label">Saree Length</span>
+          <span class="spec-value">{{ product.specs.length }}</span>
+        </div>
+        <div class="spec-row" *ngIf="product.specs.blouseIncluded">
+          <span class="spec-label">Blouse Piece</span>
+          <span class="spec-value">Included ({{ product.specs.blouseLength }})</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">Weave Technique</span>
+          <span class="spec-value">{{ product.specs.weave }}</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">Care Instructions</span>
+          <span class="spec-value">{{ product.specs.care }}</span>
+        </div>
+      </div>
+
+      <div class="purchase-actions">
+        <div class="stock-status" [ngClass]="product.stockCount > 0 ? 'in-stock' : 'out-of-stock'">
+          <span *ngIf="product.stockCount > 0">✨ Only {{ product.stockCount }} unique pieces left</span>
+          <span *ngIf="product.stockCount === 0">Sold Out</span>
+        </div>
+        
+        <div class="btn-group">
+          <button class="primary-btn add-to-cart" [disabled]="product.stockCount === 0" (click)="addToCart()">
+            Add To Bag
+          </button>
+          <button class="secondary-btn wishlist">
+            ♥ Wishlist
+          </button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Dedicated Verified Reviews Block -->
+  <section class="reviews-wrapper-section" *ngIf="product?.reviews?.length">
+    <h2 class="block-title">Customer Lookbooks & Reviews</h2>
+    <p class="block-subtitle">Real feedback from verified fine-art collectors</p>
+
+    <div class="reviews-layout-stack">
+      <div class="review-card" *ngFor="let review of product.reviews">
+        <div class="review-meta-row">
+          <div class="user-identity">
+            <span class="avatar-stub">{{ review.reviewerName.charAt(0) }}</span>
+            <div>
+              <h4 class="user-name">{{ review.reviewerName }}</h4>
+              <span class="badge-verified" *ngIf="review.verifiedPurchase">✓ Verified Purchase</span>
+            </div>
+          </div>
+          <div class="review-timeline-info">
+            <div class="review-stars-row">
+              <span *ngFor="let star of [1,2,3,4,5]" 
+                    class="star-glyph" 
+                    [class.filled]="star <= review.rating">★</span>
+            </div>
+            <span class="date-stamp">{{ review.date }}</span>
+          </div>
+        </div>
+
+        <p class="review-body-text">{{ review.comment }}</p>
+
+        <!-- Inline User Photo Attachment Gallery Array -->
+        <div class="review-attached-gallery" *ngIf="review.userPhotos && review.userPhotos.length > 0">
+          <div class="photo-frame" *ngFor="let photo of review.userPhotos">
+            <img [src]="photo" alt="Customer uploaded weave verification profile" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider" />
+
+  <!-- Highly Visual Related Recommendations Section -->
+  <section class="recommendations-container">
+    <h2 class="section-heading">You May Also Appreciate</h2>
+    <p class="section-subheading">Hand-selected masterweaves sharing similar fabric heritages</p>
+
+    <div class="recommendations-grid">
+      <div class="fallback-recommendation-card" *ngFor="let item of similarProducts">
+        <div class="card-image-box">
+          <img [src]="item.imageUrl" [alt]="item.title" />
+          <div class="card-rating-float">★ {{ item.rating }}</div>
+        </div>
+        <div class="card-info-box">
+          <span class="card-fabric-label">{{ item.fabric }}</span>
+          <h3 class="card-title-label" [title]="item.title">{{ item.title }}</h3>
+          <div class="card-price-row">
+            <span class="curr-price">₹{{ item.price | number:'1.0-0' }}</span>
+            <span class="orig-price" *ngIf="item.originalPrice">₹{{ item.originalPrice | number:'1.0-0' }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

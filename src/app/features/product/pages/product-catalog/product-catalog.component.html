@@ -1,0 +1,57 @@
+<div class="catalog-container">
+  
+  <div class="mobile-action-bar">
+    <button class="filter-trigger-btn" (click)="toggleFilterDrawer()">
+      ⚙️ Filter Options
+    </button>
+    <select class="sort-select-dropdown" (change)="onSortChange($event)">
+      <option value="featured">Featured</option>
+      <option value="low-high">Price: Low to High</option>
+      <option value="high-low">Price: High to Low</option>
+    </select>
+  </div>
+
+  <div class="layout-wrapper">
+    <aside class="filter-sidebar" [class.drawer-open]="isFilterOpen">
+      <div class="drawer-header">
+        <h3>Filter Masterpieces</h3>
+        <button class="close-drawer-btn" (click)="toggleFilterDrawer()">✕</button>
+      </div>
+
+      <div class="filter-group">
+        <h4>Fabric Type</h4>
+        <label *ngFor="let fabric of fabrics">
+          <input type="checkbox" (change)="filterByFabric(fabric)" /> {{ fabric }}
+        </label>
+      </div>
+
+      <div class="filter-group">
+        <h4>Price Range</h4>
+        <label><input type="radio" name="price" (change)="filterByPrice(0, 5000)" /> Under ₹5,000</label>
+        <label><input type="radio" name="price" (change)="filterByPrice(5000, 15000)" /> ₹5,000 - ₹15,000</label>
+        <label><input type="radio" name="price" (change)="filterByPrice(15000, 100000)" /> Premium Luxury (₹15,000+)</label>
+      </div>
+    </aside>
+
+    <div class="drawer-overlay" *ngIf="isFilterOpen" (click)="toggleFilterDrawer()"></div>
+
+    <main class="grid-panel">
+      <div class="grid-header desktop-only">
+        <p class="results-count">{{ mockSarees.length }} items curated</p>
+        <select class="sort-select-dropdown" (change)="onSortChange($event)">
+          <option value="featured">Featured Collection</option>
+          <option value="low-high">Price: Low to High</option>
+          <option value="high-low">Price: High to Low</option>
+        </select>
+      </div>
+
+      <div class="saree-grid">
+        <app-saree-card 
+          *ngFor="let item of mockSarees" 
+          [saree]="item"
+          (addToCart)="handleQuickAdd($event)">
+        </app-saree-card>
+      </div>
+    </main>
+  </div>
+</div>

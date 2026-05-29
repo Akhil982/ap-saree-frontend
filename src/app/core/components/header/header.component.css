@@ -1,0 +1,212 @@
+.site-header {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0.8rem 1.5rem;
+  height: 60px;
+  box-sizing: border-box;
+}
+
+.brand-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  .logo {
+    font-size: 1.6rem;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-decoration: none;
+    color: var(--text-primary);
+    
+    span {
+      color: var(--accent);
+    }
+  }
+}
+
+.desktop-nav {
+  ul {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    a {
+      text-decoration: none;
+      color: var(--text-primary);
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: color 0.2s ease;
+
+      &:hover {
+        color: var(--accent);
+      }
+    }
+  }
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+
+  .action-btn {
+    background: none;
+    border: none;
+    font-size: 1.15rem;
+    cursor: pointer;
+    color: var(--text-primary);
+    position: relative;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+
+    &:hover {
+      color: var(--accent);
+    }
+  }
+
+  .theme-toggle {
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    
+    .theme-text {
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-left: 4px;
+      text-transform: uppercase;
+    }
+  }
+
+  .cart-badge {
+    position: absolute;
+    top: -6px;
+    right: -8px;
+    background-color: var(--accent);
+    color: #ffffff;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 10px;
+    line-height: 1;
+  }
+}
+
+.search-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  input {
+    background-color: var(--bg-surface);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    padding: 6px 12px;
+    padding-right: 32px;
+    border-radius: 4px;
+    outline: none;
+    font-size: 0.85rem;
+    width: 200px;
+    transition: width 0.3s ease;
+
+    &:focus {
+      width: 240px;
+      border-color: var(--accent);
+    }
+  }
+
+  .search-icon {
+    position: absolute;
+    right: 10px;
+    font-size: 0.85rem;
+    pointer-events: none;
+  }
+}
+
+/* --- Responsive Layout Configurations (Mobile Adjustments) --- */
+@media (max-width: 768px) {
+  .desktop-only {
+    display: none;
+  }
+
+  .desktop-nav {
+    position: absolute;
+    top: 60px; /* Aligns right beneath the header bar border boundary */
+    left: 0;
+    width: 100%;
+    background-color: var(--bg-surface);
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s cubic-bezier(0, 1, 0, 1); /* Safe CSS expansion transition mechanics */
+
+    &.mobile-open {
+      max-height: 300px;
+      transition: max-height 0.3s cubic-bezier(1, 0, 1, 0);
+    }
+
+    ul {
+      flex-direction: column;
+      padding: 1rem 1.5rem;
+      gap: 1rem;
+
+      a {
+        display: block;
+        padding: 8px 0;
+        font-size: 1.1rem;
+      }
+    }
+  }
+
+  .mobile-menu-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    display: block;
+
+    .hamburger {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background-color: var(--text-primary);
+      position: relative;
+
+      &::before, &::after {
+        content: '';
+        position: absolute;
+        width: 22px;
+        height: 2px;
+        background-color: var(--text-primary);
+        left: 0;
+      }
+      &::before { top: -6px; }
+      &::after { bottom: -6px; }
+    }
+  }
+}
+
+@media (min-width: 769px) {
+  .mobile-menu-btn {
+    display: none;
+  }
+}
