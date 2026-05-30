@@ -10,7 +10,7 @@ export interface SareeItem {
   hoverImage?: string;
   isExclusive?: boolean;
   stockCount: number;
-  colors?: string[];
+  colors?: string[]; // 💡 Matches catalog file interfaces perfectly
 }
 
 @Component({
@@ -27,7 +27,7 @@ export class SareeCardComponent {
   }
 
   onQuickAdd(event: Event): void {
-    event.stopPropagation(); // Prevents navigating to details page when clicking the button
+    event.stopPropagation(); 
     if (this.saree.stockCount > 0) {
       this.addToCart.emit(this.saree);
     }

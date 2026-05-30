@@ -1,0 +1,52 @@
+<div class="auth-viewport-wrapper">
+  <div class="auth-card-panel">
+    
+    <div class="brand-logo-frame">
+      <h1>HOUSE OF NEMALI</h1>
+      <p class="subtitle-text">The Saree Store • Secure Gateway</p>
+    </div>
+
+    <div class="alert-box error" *ngIf="errorMessage">{{ errorMessage }}</div>
+    <div class="alert-box success" *ngIf="successMessage">{{ successMessage }}</div>
+
+    <div class="form-container" *ngIf="!isOtpSent">
+      <p class="prompt-text">Welcome. Provide your email identity coordinates to initialize your boutique profile authentication session.</p>
+      
+      <div class="input-field-block">
+        <label>EMAIL ADDRESS</label>
+        <input 
+          type="email" 
+          [(ngModel)]="email" 
+          placeholder="identity@domain.com" 
+          [disabled]="isLoading"
+          (keyup.enter)="requestOtp()">
+      </div>
+
+      <button class="action-btn" (click)="requestOtp()" [disabled]="isLoading">
+        {{ isLoading ? 'Generating Code...' : 'Get Verification Passcode' }}
+      </button>
+    </div>
+
+    <div class="form-container" *ngIf="isOtpSent">
+      <p class="prompt-text">A unique 6-digit access code sequence has been routed to <strong>{{ email }}</strong>. Enter it below to proceed.</p>
+      
+      <div class="input-field-block">
+        <label>SECURE PASSCODE</label>
+        <input 
+          type="text" 
+          [(ngModel)]="otp" 
+          placeholder="000000" 
+          maxLength="6"
+          [disabled]="isLoading"
+          (keyup.enter)="verifyOtp()">
+      </div>
+
+      <button class="action-btn" (click)="verifyOtp()" [disabled]="isLoading">
+        {{ isLoading ? 'Authorizing Session...' : 'Verify & Enter Store' }}
+      </button>
+
+      <a class="fallback-link" (click)="isOtpSent = false; errorMessage = ''; successMessage = ''">← Change Account Email</a>
+    </div>
+
+  </div>
+</div>

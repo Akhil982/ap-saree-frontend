@@ -1,21 +1,29 @@
 .app-container {
+  width: 100%;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
-  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.main-content {
-  flex: 1 0 auto; /* Pushes footer down if page content is short */
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem 1rem;
-  box-sizing: border-box;
+/* This styling applies ONLY to the product views in the background */
+.blur-store-backdrop {
+  opacity: 0.15;                /* Dims the main product rows to a soft, light profile */
+  filter: blur(5px);           /* Blurs out the catalog details gracefully */
+  pointer-events: none;        /* Blocks background element item selections */
+  user-select: none;
+}
 
-  @media (max-width: 768px) {
-    padding: 1rem;
-  }
+/* Full-viewport overlay frame that lets your crisp header layout shine through */
+.store-auth-overlay-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(5, 7, 10, 0.4); /* Soft tint layer */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;                         /* Stands out cleanly above all modules */
+  backdrop-filter: blur(1px);
 }

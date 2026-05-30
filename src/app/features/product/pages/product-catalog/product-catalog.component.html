@@ -1,35 +1,68 @@
-<div class="catalog-container">
+<div class="catalog-container full-viewport-bleed">
   
   <div class="mobile-action-bar">
     <button class="filter-trigger-btn" (click)="toggleFilterDrawer()">
-      ⚙️ Filter Options
+      <span class="control-icon">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+          <line x1="4" y1="21" x2="4" y2="14" />
+          <line x1="4" y1="10" x2="4" y2="3" />
+          <line x1="12" y1="21" x2="12" y2="12" />
+          <line x1="12" y1="8" x2="12" y2="3" />
+          <line x1="20" y1="21" x2="20" y2="16" />
+          <line x1="20" y1="12" x2="20" y2="3" />
+          <line x1="1" y1="14" x2="7" y2="14" />
+          <line x1="9" y1="8" x2="15" y2="8" />
+          <line x1="17" y1="16" x2="23" y2="16" />
+        </svg>
+      </span>
+      <span class="btn-text">Filter Masterpieces</span>
     </button>
-    <select class="sort-select-dropdown" (change)="onSortChange($event)">
-      <option value="featured">Featured</option>
-      <option value="low-high">Price: Low to High</option>
-      <option value="high-low">Price: High to Low</option>
-    </select>
+    
+    <div class="custom-dropdown-wrapper">
+      <select class="sort-select-dropdown" (change)="onSortChange($event)">
+        <option value="featured">Sort: Featured</option>
+        <option value="low-high">Price: Low to High</option>
+        <option value="high-low">Price: High to Low</option>
+      </select>
+    </div>
   </div>
 
   <div class="layout-wrapper">
     <aside class="filter-sidebar" [class.drawer-open]="isFilterOpen">
       <div class="drawer-header">
-        <h3>Filter Masterpieces</h3>
-        <button class="close-drawer-btn" (click)="toggleFilterDrawer()">✕</button>
+        <h3 class="drawer-title">Filter Artistry</h3>
+        <button class="close-drawer-btn" (click)="toggleFilterDrawer()" aria-label="Close Filter Menu">✕</button>
       </div>
 
-      <div class="filter-group">
-        <h4>Fabric Type</h4>
-        <label *ngFor="let fabric of fabrics">
-          <input type="checkbox" (change)="filterByFabric(fabric)" /> {{ fabric }}
-        </label>
-      </div>
+      <div class="filter-scroll-area">
+        <div class="filter-group">
+          <h4 class="group-title">Fabric Type</h4>
+          <div class="custom-checkbox-stack">
+            <label class="checkbox-container" *ngFor="let fabric of fabrics; let i = index">
+              <input type="checkbox" (change)="filterByFabric(fabric)" />
+              <span class="premium-checkmark"></span>
+              <span class="label-text">{{ fabric }}</span>
+            </label>
+          </div>
+        </div>
 
-      <div class="filter-group">
-        <h4>Price Range</h4>
-        <label><input type="radio" name="price" (change)="filterByPrice(0, 5000)" /> Under ₹5,000</label>
-        <label><input type="radio" name="price" (change)="filterByPrice(5000, 15000)" /> ₹5,000 - ₹15,000</label>
-        <label><input type="radio" name="price" (change)="filterByPrice(15000, 100000)" /> Premium Luxury (₹15,000+)</label>
+        <div class="filter-group">
+          <h4 class="group-title">Price Range</h4>
+          <div class="capsule-tier-grid">
+            <label class="capsule-container">
+              <input type="radio" name="price" (change)="filterByPrice(0, 5000)" />
+              <span class="premium-capsule">Under ₹5,000</span>
+            </label>
+            <label class="capsule-container">
+              <input type="radio" name="price" (change)="filterByPrice(5000, 15000)" />
+              <span class="premium-capsule">₹5,000 — ₹15,000</span>
+            </label>
+            <label class="capsule-container">
+              <input type="radio" name="price" (change)="filterByPrice(15000, 100000)" />
+              <span class="premium-capsule">Premium Luxury</span>
+            </label>
+          </div>
+        </div>
       </div>
     </aside>
 
@@ -37,12 +70,14 @@
 
     <main class="grid-panel">
       <div class="grid-header desktop-only">
-        <p class="results-count">{{ mockSarees.length }} items curated</p>
-        <select class="sort-select-dropdown" (change)="onSortChange($event)">
-          <option value="featured">Featured Collection</option>
-          <option value="low-high">Price: Low to High</option>
-          <option value="high-low">Price: High to Low</option>
-        </select>
+        <p class="results-count">{{ mockSarees.length }} Masterpieces Curated</p>
+        <div class="custom-dropdown-wrapper">
+          <select class="sort-select-dropdown" (change)="onSortChange($event)">
+            <option value="featured">Featured Collection</option>
+            <option value="low-high">Price: Low to High</option>
+            <option value="high-low">Price: High to Low</option>
+          </select>
+        </div>
       </div>
 
       <div class="saree-grid">

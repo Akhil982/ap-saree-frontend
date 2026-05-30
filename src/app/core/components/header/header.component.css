@@ -1,115 +1,176 @@
+:root {
+  --font-serif: 'Cinzel', 'Didot', serif;
+}
+
 .site-header {
   background-color: var(--bg-primary);
   color: var(--text-primary);
   border-bottom: 1px solid var(--border-color);
-  box-shadow: var(--shadow-sm);
   position: sticky;
   top: 0;
   z-index: 1000;
-  transition: background-color 0.3s ease, border-color 0.3s ease;
+  transition: background-color 0.4s ease, border-color 0.4s ease;
+  width: 100%;
 }
 
 .header-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0.8rem 1.5rem;
-  height: 60px;
+  width: 100% !important;
+  max-width: 100vw !important;
+  margin: 0;
+  padding: 0 1.5rem;
+  height: 75px; /* Slightly elevated height for better vertical balance */
   box-sizing: border-box;
+  position: relative;
+  
+  @media (min-width: 1200px) {
+    padding: 0 3rem; /* Perfect alignment with full-width catalog grid specs */
+  }
 }
 
+/* --- Brand Logo Pushed to Left Corner --- */
 .brand-section {
   display: flex;
   align-items: center;
-  gap: 1rem;
-
+  gap: 1.25rem;
+  
   .logo {
-    font-size: 1.6rem;
+    font-family: 'Cinzel', 'Didot', var(--font-serif);
+    font-size: 1.7rem;
     font-weight: 800;
-    letter-spacing: 3px;
+    letter-spacing: 4px;
     text-decoration: none;
     color: var(--text-primary);
+    display: inline-block;
     
-    span {
+    .luxury-dot {
       color: var(--accent);
+      margin-left: -2px;
     }
   }
 }
 
+/* --- Centered Navigation Alignment (Web Only) --- */
 .desktop-nav {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%); /* Keeps core text navigation perfectly centered between links */
+  
+  @media (max-width: 992px) { 
+    display: none; 
+  }
+
   ul {
     display: flex;
-    gap: 2rem;
+    gap: 2.5rem;
     list-style: none;
     margin: 0;
     padding: 0;
 
     a {
       text-decoration: none;
-      color: var(--text-primary);
+      color: var(--text-muted);
       font-weight: 500;
-      font-size: 0.95rem;
-      transition: color 0.2s ease;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      position: relative;
+      padding: 6px 0;
+      transition: color 0.3s ease;
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: 0; left: 0;
+        width: 0; height: 1px;
+        background-color: var(--text-primary);
+        transition: width 0.3s ease;
+      }
 
       &:hover {
-        color: var(--accent);
+        color: var(--text-primary);
+        &::after { width: 100%; }
+      }
+      
+      &.active-link {
+        color: var(--text-primary);
+        &::after { width: 100%; }
       }
     }
   }
 }
 
+/* --- Action Controls (Upscaled Action Deck Buttons) --- */
 .header-actions {
   display: flex;
   align-items: center;
-  gap: 1.25rem;
+  gap: 1.6rem; /* Enriched gaps for crisp finger triggers and separation */
+  margin-left: auto;
 
   .action-btn {
     background: none;
     border: none;
-    font-size: 1.15rem;
     cursor: pointer;
     color: var(--text-primary);
     position: relative;
     text-decoration: none;
     display: flex;
     align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease, color 0.25s ease;
 
     &:hover {
       color: var(--accent);
     }
   }
 
+  /* Upscaled Traditional Emoji Fonts Sizes */
+  .profile-link, .cart-link {
+    font-size: 1.45rem; /* Noticeably larger presence on the navbar */
+  }
+
   .theme-toggle {
-    background-color: var(--bg-surface);
+    background-color: transparent;
     border: 1px solid var(--border-color);
-    padding: 6px 12px;
-    border-radius: 20px;
-    font-size: 0.9rem;
+    padding: 7px 14px;
+    border-radius: 0px; 
+    font-size: 0.75rem;
+    height: 34px;
     
     .theme-text {
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       font-weight: 600;
       margin-left: 4px;
-      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    &:hover {
+      border-color: var(--text-primary);
     }
   }
 
   .cart-badge {
     position: absolute;
-    top: -6px;
+    top: -5px; 
     right: -8px;
     background-color: var(--accent);
     color: #ffffff;
-    font-size: 0.7rem;
+    font-size: 0.65rem;
     font-weight: 700;
-    padding: 2px 6px;
-    border-radius: 10px;
+    min-width: 17px;
+    height: 17px;
+    padding: 0 4px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     line-height: 1;
   }
 }
 
+/* --- Upscaled & Wider Search Input Component --- */
 .search-box {
   position: relative;
   display: flex;
@@ -119,94 +180,176 @@
     background-color: var(--bg-surface);
     color: var(--text-primary);
     border: 1px solid var(--border-color);
-    padding: 6px 12px;
-    padding-right: 32px;
+    padding: 8px 36px 8px 16px; /* Optimized paddings */
     border-radius: 4px;
     outline: none;
     font-size: 0.85rem;
-    width: 200px;
-    transition: width 0.3s ease;
+    width: 240px; /* Scaled wider by default */
+    transition: all 0.35s cubic-bezier(0.25, 1, 0.5, 1);
 
     &:focus {
-      width: 240px;
-      border-color: var(--accent);
+      width: 300px; /* Extended widescreen visibility layout values */
+      border-color: var(--text-primary);
     }
   }
 
   .search-icon {
     position: absolute;
-    right: 10px;
-    font-size: 0.85rem;
+    right: 12px;
+    font-size: 0.9rem;
     pointer-events: none;
+    display: flex;
+    align-items: center;
   }
 }
 
-/* --- Responsive Layout Configurations (Mobile Adjustments) --- */
-@media (max-width: 768px) {
-  .desktop-only {
-    display: none;
-  }
+/* --- Mobile Menu Button --- */
+.mobile-menu-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px 4px;
+  display: none;
+  z-index: 2500;
 
-  .desktop-nav {
-    position: absolute;
-    top: 60px; /* Aligns right beneath the header bar border boundary */
-    left: 0;
-    width: 100%;
-    background-color: var(--bg-surface);
-    border-bottom: 1px solid var(--border-color);
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s cubic-bezier(0, 1, 0, 1); /* Safe CSS expansion transition mechanics */
-
-    &.mobile-open {
-      max-height: 300px;
-      transition: max-height 0.3s cubic-bezier(1, 0, 1, 0);
-    }
-
-    ul {
-      flex-direction: column;
-      padding: 1rem 1.5rem;
-      gap: 1rem;
-
-      a {
-        display: block;
-        padding: 8px 0;
-        font-size: 1.1rem;
-      }
-    }
-  }
-
-  .mobile-menu-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 4px;
+  @media (max-width: 992px) {
     display: block;
+  }
 
-    .hamburger {
-      display: block;
-      width: 22px;
-      height: 2px;
+  .hamburger-bar {
+    display: block;
+    width: 20px;
+    height: 1.5px;
+    background-color: var(--text-primary);
+    position: relative;
+    transition: background 0.2s ease;
+
+    &::before, &::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 1.5px;
       background-color: var(--text-primary);
-      position: relative;
+      left: 0;
+      transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    &::before { top: -6px; }
+    &::after { bottom: -6px; }
+  }
 
-      &::before, &::after {
-        content: '';
-        position: absolute;
-        width: 22px;
-        height: 2px;
-        background-color: var(--text-primary);
-        left: 0;
-      }
-      &::before { top: -6px; }
-      &::after { bottom: -6px; }
+  &.active {
+    .hamburger-bar {
+      background: transparent;
+      &::before { transform: translateY(6px) rotate(45deg); }
+      &::after { transform: translateY(-6px) rotate(-45deg); }
     }
   }
 }
 
-@media (min-width: 769px) {
-  .mobile-menu-btn {
-    display: none;
+/* --- Immersive Full Screen Overlay Drawer Menu for Mobile --- */
+.luxury-mobile-drawer {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  z-index: 2001;
+  background-color: var(--bg-primary);
+  transform: translateX(-100%);
+  transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+  display: flex;
+  flex-direction: column;
+
+  &.drawer-active {
+    transform: translateX(0);
   }
+
+  .drawer-inner-wrapper {
+    padding: 2rem 2rem 3rem 2rem;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .drawer-header-branding {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1.5rem;
+
+    .drawer-logo {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      letter-spacing: 4px;
+      color: var(--text-primary);
+      span { color: var(--accent); }
+    }
+
+    .close-drawer-trigger {
+      background: none;
+      border: none;
+      font-size: 1.25rem;
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+  }
+
+  .mobile-drawer-nav {
+    margin-top: 3.5rem;
+    
+    ul {
+      list-style: none;
+      padding: 0; margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    a {
+      text-decoration: none;
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      letter-spacing: 1px;
+      color: var(--text-primary);
+      display: block;
+      transition: color 0.3s ease;
+
+      &:hover { color: var(--accent); }
+    }
+    
+    .highlight-arrival {
+      color: var(--accent);
+      font-weight: 500;
+    }
+  }
+
+  .drawer-footer-meta {
+    margin-top: auto;
+    border-top: 1px solid var(--border-color);
+    padding-top: 2rem;
+
+    .mobile-search {
+      width: 100%;
+      margin-bottom: 1.5rem;
+      input { width: 100%; font-size: 0.95rem; }
+    }
+
+    .curated-text {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+  }
+}
+
+/* Translucent Frosted Overlay Panel Backdrop */
+.drawer-backdrop-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background-color: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 2000;
 }

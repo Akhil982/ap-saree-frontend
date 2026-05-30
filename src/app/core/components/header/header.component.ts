@@ -8,29 +8,22 @@ import { Component, OnInit } from '@angular/core';
 export class HeaderComponent implements OnInit {
   isDarkMode: boolean = false;
   isMobileMenuOpen: boolean = false;
-  cartCount: number = 2; // Mock variable state to test structural display bubble
+  cartCount: number = 2; // Dynamic basket tracking marker element
 
   ngOnInit(): void {
     this.initializeThemeState();
   }
 
-  /**
-   * Evaluates native browser configuration settings or local storage states
-   */
   private initializeThemeState(): void {
     const savedTheme = localStorage.getItem('app-theme');
     if (savedTheme) {
       this.isDarkMode = savedTheme === 'dark';
     } else {
-      // Check device's OS-level preferences
       this.isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
     }
     this.updateBodyTagClass();
   }
 
-  /**
-   * Reverses state values and commits update mutations to DOM and storage
-   */
   toggleTheme(): void {
     this.isDarkMode = !this.isDarkMode;
     localStorage.setItem('app-theme', this.isDarkMode ? 'dark' : 'light');
@@ -50,9 +43,19 @@ export class HeaderComponent implements OnInit {
 
   toggleMobileMenu(): void {
     this.isMobileMenuOpen = !this.isMobileMenuOpen;
+    this.manageViewportScrolling();
   }
 
   closeMobileMenu(): void {
     this.isMobileMenuOpen = false;
+    this.manageViewportScrolling();
+  }
+
+  private manageViewportScrolling(): void {
+    if (this.isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
   }
 }

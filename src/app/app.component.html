@@ -2,8 +2,12 @@
   
   <app-header></app-header>
 
-  <main class="main-content">
+  <main class="main-content" [class.blur-store-backdrop]="!isUserLoggedIn()">
     <router-outlet></router-outlet>
   </main>
 
-  </div>
+</div>
+
+<div class="store-auth-overlay-modal" *ngIf="!isUserLoggedIn()">
+  <app-auth></app-auth>
+</div>

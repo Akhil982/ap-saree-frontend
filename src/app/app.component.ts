@@ -7,4 +7,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'ap-saree-frontend';
+  isUserLoggedIn(): boolean {
+    return localStorage.getItem('zari_token') !== null;
+  }
 }
