@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class AuthComponent implements OnInit {
   // Directly targeting your local Spring Boot Auth REST Controller
-  private apiUrl = 'http://ap-saree-store.onrender.com/ap-saree-store/api/auth';
+  private apiUrl = 'https://ap-saree-store.onrender.com/ap-saree-store/api/auth';
 
   email: string = '';
   otp: string = '';
