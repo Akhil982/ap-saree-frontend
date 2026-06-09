@@ -1,19 +1,18 @@
 <div class="auth-viewport-wrapper">
   <div class="auth-card-panel">
     
-    <!-- 💡 ADDED: Close button for guest access -->
     <button class="guest-close-btn" (click)="dismissAuthModal()" aria-label="Explore as Guest">✕</button>
     
     <div class="brand-logo-frame">
-      <h1>House Of Jaabili</h1>
-      <p class="subtitle-text">The Saree Store • Secure Gateway</p>
+      <a class="logo-heading">HOUSE OF JAABILI<span class="luxury-dot">.</span></a>
+      <p class="subtitle-text">Secure Gateway • Fine Weaves</p>
     </div>
 
     <div class="alert-box error" *ngIf="errorMessage">{{ errorMessage }}</div>
     <div class="alert-box success" *ngIf="successMessage">{{ successMessage }}</div>
 
     <div class="form-container" *ngIf="!isOtpSent">
-      <p class="prompt-text">Welcome. Provide your email identity coordinates to initialize your boutique profile authentication session.</p>
+      <p class="prompt-text">Welcome. Provide your email address to initialize secured authentication session.</p>
       
       <div class="input-field-block">
         <label>EMAIL ADDRESS</label>

@@ -1,157 +1,202 @@
+/* Import both popular heritage luxury fonts to ensure a perfect match */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&family=Cinzel:wght@600;700&display=swap');
+
 .auth-viewport-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
-  background-color: transparent; /* Changed from solid color to clear transparent */
+  background-color: transparent; 
 }
 
 .auth-card-panel {
+  position: relative; 
   width: 100%;
-  max-width: 400px;
-  background-color: var(--bg-surface);
-  border: 1px solid var(--border-color);
+  max-width: 420px;
+  background-color: var(--bg-surface, #fbfaf7);
+  border: 1px solid var(--border-color, rgba(61, 12, 27, 0.08));
   border-radius: 4px;
-  padding: 3rem 2.5rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  padding: 3.5rem 2.5rem;
+  box-shadow: 0 20px 50px rgba(61, 12, 27, 0.06);
+  box-sizing: border-box;
 }
 
+/* --- 🌟 IDENTITY MATCH ENGINE --- */
 .brand-logo-frame {
   text-align: center;
   margin-bottom: 2.5rem;
+
+  .logo-heading {
+    /* 👉 OPTION A (Premium Serif): 'Playfair Display', serif 
+      👉 OPTION B (Classic Roman Luxury): 'Cinzel', serif
+    */
+    font-family: 'Playfair Display', 'Cinzel', serif; 
+    font-weight: 700;
+    font-style: normal;
+    text-transform: uppercase;
+    font-size: 1.4rem; 
+    letter-spacing: 3px; /* High-end fashion house letter tracking spacing */
+    color: var(--text-primary, #3d0c1b);
+    text-decoration: none;
+    margin: 0;
+    line-height: 1.2;
+    display: inline-block;
+
+    .luxury-dot {
+      color: var(--accent, #a22a45); /* Crimson brand accent dot */
+      font-weight: 700;
+      margin-left: 1px;
+    }
+  }
+
+  .subtitle-text {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.68rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted, #776a6d);
+    font-weight: 500;
+    margin-top: 0.75rem;
+  }
 }
 
-.brand-logo-frame h1 {
-  font-size: 2.5rem;
-  font-weight: 700;
-  letter-spacing: 6px;
-  color: var(--text-primary);
-  margin: 0;
-}
+/* --- FORM TEXT & LABELS --- */
 
-.brand-logo-frame .subtitle-text {
-  font-size: 0.75rem;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--accent);
-  font-weight: 600;
-  margin-top: 0.5rem;
-}
-
-.prompt-text {
-  font-size: 0.95rem;
-  color: var(--text-muted);
+.prompt-text-one {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.2rem;
+  color: var(--text-muted, #776a6d);
   line-height: 1.6;
   margin-bottom: 2rem;
   text-align: center;
+  
+  strong {
+    color: var(--text-primary, #3d0c1b);
+    font-weight: 500;
+  }
+}
+
+.prompt-text {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.88rem;
+  color: var(--text-muted, #776a6d);
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  text-align: center;
+  
+  strong {
+    color: var(--text-primary, #3d0c1b);
+    font-weight: 500;
+  }
 }
 
 .input-field-block {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.75rem;
+
+  label {
+    display: block;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    color: var(--text-primary, #3d0c1b);
+    margin-bottom: 0.6rem;
+  }
+
+  input {
+    width: 100%;
+    box-sizing: border-box;
+    background-color: transparent;
+    border: 1px solid var(--border-color, rgba(61, 12, 27, 0.15));
+    border-radius: 4px;
+    padding: 14px 16px;
+    color: var(--text-primary, #3d0c1b);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    outline: none;
+    transition: all 0.25s ease;
+
+    &::placeholder {
+      color: var(--text-muted, rgba(119, 106, 109, 0.5));
+    }
+
+    &:focus {
+      border-color: var(--text-primary, #3d0c1b);
+      box-shadow: 0 0 0 3px rgba(61, 12, 27, 0.03);
+    }
+
+    &:disabled {
+      background-color: rgba(61, 12, 27, 0.02);
+      color: var(--text-muted, #776a6d);
+      cursor: not-allowed;
+    }
+  }
 }
 
-.input-field-block label {
-  display: block;
-  font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 1px;
-  color: var(--text-primary);
-  margin-bottom: 0.5rem;
-}
-
-.input-field-block input {
-  width: 100%;
-  box-sizing: border-box;
-  background-color: transparent;
-  border: 1px solid var(--border-color);
-  border-radius: 4px;
-  padding: 12px 16px;
-  color: var(--text-primary);
-  font-size: 1rem;
-  outline: none;
-  transition: border-color 0.2s ease;
-}
-
-.input-field-block input:focus {
-  border-color: var(--text-primary);
-}
-
+/* --- BUTTON LAYERS --- */
 .action-btn {
   width: 100%;
-  background-color: var(--accent);
+  background-color: var(--accent, #a22a45); 
   color: #ffffff;
   border: none;
   border-radius: 4px;
-  padding: 14px;
-  font-size: 1rem;
+  padding: 15px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 1.5px;
   cursor: pointer;
-  transition: opacity 0.2s ease;
+  transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+
+  &:hover:not([disabled]) {
+    background-color: var(--text-primary, #3d0c1b); 
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(61, 12, 27, 0.15);
+  }
+
+  &:disabled {
+    background-color: var(--border-color, rgba(61, 12, 27, 0.08));
+    color: var(--text-muted, #776a6d);
+    cursor: not-allowed;
+  }
 }
 
-.action-btn:hover:not([disabled]) {
-  opacity: 0.9;
-}
-
-.action-btn:disabled {
-  background-color: var(--border-color);
-  color: var(--text-muted);
-  cursor: not-allowed;
+.guest-close-btn {
+  position: absolute;
+  top: 20px;
+  right: 24px;
+  background: transparent;
+  border: none;
+  color: var(--text-muted, #776a6d);
+  font-size: 1.15rem;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  &:hover { color: var(--text-primary, #3d0c1b); }
 }
 
 .alert-box {
-  padding: 12px;
+  font-family: 'Inter', sans-serif;
+  padding: 12px 16px;
   border-radius: 4px;
-  font-size: 0.9rem;
-  margin-bottom: 1.5rem;
+  font-size: 0.85rem;
+  margin-bottom: 1.75rem;
   text-align: center;
-}
-
-.alert-box.error {
-  background-color: rgba(244, 67, 54, 0.1);
-  border: 1px solid #f44336;
-  color: #f44336;
-}
-
-.alert-box.success {
-  background-color: rgba(76, 175, 80, 0.1);
-  border: 1px solid #4caf50;
-  color: #4caf50;
+  font-weight: 500;
+  &.error { background-color: rgba(244, 67, 54, 0.06); border: 1px solid rgba(244, 67, 54, 0.2); color: #d32f2f; }
+  &.success { background-color: rgba(76, 175, 80, 0.06); border: 1px solid rgba(76, 175, 80, 0.2); color: #388e3c; }
 }
 
 .fallback-link {
   display: block;
   text-align: center;
-  font-size: 0.85rem;
-  color: var(--text-muted);
-  margin-top: 1.5rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-muted, #776a6d);
+  margin-top: 1.75rem;
   text-decoration: none;
   cursor: pointer;
-  transition: color 0.2s ease;
-}
-
-.fallback-link:hover {
-  color: var(--text-primary);
-}
-
-.auth-card-panel {
-  position: relative; /* Allows positioning close icon accurately */
-}
-
-.guest-close-btn {
-  position: absolute;
-  top: 16px;
-  right: 20px;
-  background: transparent;
-  border: none;
-  color: var(--text-muted, #a0a0a0);
-  font-size: 1.3rem;
-  cursor: pointer;
-  transition: color 0.2s ease;
-
-  &:hover {
-    color: var(--text-primary, #ffffff);
-  }
+  &:hover { color: var(--accent, #a22a45); }
 }
