@@ -33,9 +33,10 @@
     gap: 1rem; 
   }
 
-  @media (max-width: 480px) {
-    gap: 0.5rem; /* Drastically drop spacing to squeeze every element into bounds safely */
+  @media (max-width: 768px) {
+    height: 65px; /* Squeezed height to elevate high-end app aesthetic feel */
     padding: 0 0.75rem;
+    gap: 0.25rem; /* Drastically drop layout padding to secure item placement */
   }
 }
 
@@ -70,21 +71,19 @@
     }
 
     @media (max-width: 768px) {
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       letter-spacing: 0.5px;
       
-      .luxury-dot {
-        font-size: 1.4rem;
-      }
+      .luxury-dot { font-size: 1.2rem; }
     }
 
-    @media (max-width: 380px) {
-      font-size: 1rem; /* Compact layout safety limit for ultra-small screens */
+    @media (max-width: 360px) {
+      font-size: 0.95rem; /* Absolute fallback threshold for mini screens */
     }
   }
 }
 
-/* --- Center Navigation Track --- */
+/* --- Center Navigation Track (Desktop Only) --- */
 .desktop-nav {
   display: flex;
   align-items: center;
@@ -114,7 +113,7 @@
       letter-spacing: 0.2px;
       padding: 0.5rem 0;
       opacity: 0.85;
-      transition: opacity 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+      transition: opacity 0.25s ease;
       white-space: nowrap;
 
       &:hover, &.active-link {
@@ -125,7 +124,7 @@
   }
 }
 
-/* --- 💡 FIXED: PROPORTIONAL SEARCH BOX ENGINE --- */
+/* --- 💡 FIXED: HYBRID MINI SEARCH BOX ELEMENT --- */
 .search-box {
   position: relative;
   display: flex;
@@ -144,61 +143,38 @@
     border-color: rgba(61, 12, 27, 0.2);
   }
 
-  /* 🌟 FIXED: Keep search bounded on smaller viewports instead of blowing up */
   @media (max-width: 1024px) {
-    max-width: 240px; 
+    max-width: 200px; 
     padding-left: 10px;
   }
 
-  @media (max-width: 640px) {
-    max-width: 140px; /* Locks search bounds tight to guard the right side icons */
-    padding-left: 8px;
-    border-radius: 6px;
-  }
+  /* 🌟 TRANSFORMATION: Convert to ultra-compact action icon on mobile screens */
+  @media (max-width: 768px) {
+    background: none !important;
+    border: none !important;
+    padding: 0 !important;
+    max-width: min-content !important;
+    min-width: auto !important;
+    flex-grow: 0;
 
-  @media (max-width: 380px) {
-    max-width: 105px; /* Ultra-compact constraint safety drop */
-  }
-
-  input {
-    background: none;
-    border: none;
-    outline: none;
-    color: var(--text-primary, #3d0c1b);
-    font-family: 'Inter', sans-serif;
-    font-size: 0.85rem;
-    height: 36px;
-    width: 100%; 
-    padding: 0;
-
-    &::placeholder {
-      color: var(--text-muted, #9a888c);
+    input {
+      display: none !important; /* Removes massive input container layout blocking */
     }
-    
-    @media (max-width: 640px) {
-      font-size: 0.8rem;
+
+    .search-submit-btn {
+      width: 32px;
       height: 32px;
-    }
-  }
-
-  .search-submit-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 6px;
-    color: var(--text-primary, #3d0c1b);
-    flex-shrink: 0;
-
-    .nav-svg-icon {
-      width: 18px;
-      height: 18px;
+      padding: 0;
+      border-radius: 50%;
+      background-color: transparent;
       
-      @media (max-width: 640px) {
-        width: 15px;
-        height: 15px;
+      &:hover {
+        background-color: rgba(61, 12, 27, 0.04);
+      }
+
+      .nav-svg-icon {
+        width: 19px !important;
+        height: 19px !important;
       }
     }
   }
@@ -209,14 +185,14 @@
   display: flex;
   align-items: center;
   gap: 1.25rem;
-  flex-shrink: 0; /* 🌟 FIXED: Strict rule forces elements to lock configuration and never slide out of bounds */
+  flex-shrink: 0; 
 
   @media (max-width: 1024px) {
     gap: 0.75rem; 
   }
 
-  @media (max-width: 480px) {
-    gap: 0.4rem;
+  @media (max-width: 768px) {
+    gap: 0.25rem; /* Squeezes icons tightly together alongside search button setup */
   }
 
   .action-btn {
@@ -236,8 +212,10 @@
       background-color: rgba(61, 12, 27, 0.04);
     }
 
-    @media (max-width: 480px) {
+    @media (max-width: 768px) {
       padding: 4px;
+      width: 32px;
+      height: 32px;
     }
   }
 
@@ -251,14 +229,14 @@
       height: 20px;
     }
     
-    @media (max-width: 480px) {
+    @media (max-width: 768px) {
       width: 19px;
       height: 19px;
     }
   }
 }
 
-/* --- Capsule Theme Button --- */
+/* --- Capsule / Circular Theme Toggle Button --- */
 .theme-toggle {
   display: flex;
   align-items: center;
@@ -276,9 +254,7 @@
   transition: opacity 0.2s ease;
   flex-shrink: 0;
 
-  &:hover {
-    opacity: 0.95;
-  }
+  &:hover { opacity: 0.95; }
 
   @media (max-width: 1024px) {
     height: 32px;
@@ -288,6 +264,17 @@
     border-radius: 50%;
     
     .theme-text { display: none; } 
+  }
+
+  @media (max-width: 768px) {
+    height: 32px;
+    width: 32px;
+    background-color: transparent; /* Seamless clean icon look matching others */
+    color: var(--text-primary, #3d0c1b);
+    
+    &:hover {
+      background-color: rgba(61, 12, 27, 0.04);
+    }
   }
 
   .theme-svg-icon {
@@ -318,7 +305,7 @@
   }
 
   @media (max-width: 640px) {
-    display: none; /* Safely off; links cascade internally inside mobile drawer */
+    display: none; /* Controlled inside drawer layout navigation lists */
   }
 
   .identity-popover-badge {
@@ -378,7 +365,7 @@
     box-sizing: border-box;
     border: 2px solid var(--bg-primary, #fbfaf7);
     
-    @media (max-width: 480px) {
+    @media (max-width: 768px) {
       min-width: 15px;
       height: 15px;
       font-size: 0.58rem;
@@ -398,14 +385,8 @@
   justify-content: center;
   flex-shrink: 0;
 
-  @media (max-width: 1024px) {
-    display: flex;
-  }
-  
-  @media (max-width: 480px) {
-    padding: 4px;
-    margin-right: 0;
-  }
+  @media (max-width: 1024px) { display: flex; }
+  @media (max-width: 768px) { padding: 4px; margin-right: 0; }
 
   .hamburger-bar {
     display: block;
@@ -437,7 +418,7 @@
   }
 }
 
-/* --- MOBILE MENU DRAWER SLIDE OVERLAY --- */
+/* --- 🌟 PREMIUM OFF-CANVAS MENU DRAWER (MATCHES PRODUCT FILTERS) --- */
 .mobile-nav-drawer {
   position: fixed;
   top: 0;
@@ -447,19 +428,14 @@
   z-index: 2000;
   visibility: hidden;
   pointer-events: none;
-  transition: visibility 0.3s ease;
+  transition: visibility 0.4s cubic-bezier(0.25, 1, 0.5, 1);
 
   &.drawer-open {
     visibility: visible;
     pointer-events: auto;
 
-    .drawer-backdrop {
-      opacity: 1;
-    }
-
-    .drawer-content-card {
-      transform: translateX(0);
-    }
+    .drawer-backdrop { opacity: 1; }
+    .drawer-content-card { transform: translateX(0); }
   }
 
   .drawer-backdrop {
@@ -469,40 +445,40 @@
     background-color: rgba(61, 12, 27, 0.4); 
     backdrop-filter: blur(4px);
     opacity: 0;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.4s ease;
   }
 
   .drawer-content-card {
     position: absolute;
     top: 0;
     left: 0;
-    width: 80%;
-    max-width: 320px;
+    width: 320px;
+    max-width: 85vw;
     height: 100%;
     background-color: var(--bg-primary, #fbfaf7);
-    box-shadow: 20px 0 40px rgba(0, 0, 0, 0.15);
+    box-shadow: 20px 0 50px rgba(0, 0, 0, 0.05);
     transform: translateX(-100%);
-    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
     display: flex;
     flex-direction: column;
-    padding: 2rem 1.5rem;
-    box-sizing: border-box;
+    overflow: hidden;
   }
 
   .drawer-header {
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    margin-bottom: 2.5rem;
+    align-items: center;
+    padding: 1.75rem 1.5rem;
     border-bottom: 1px solid var(--border-color, rgba(61, 12, 27, 0.08));
-    padding-bottom: 1rem;
+    flex-shrink: 0;
 
     .drawer-title {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 2px;
-      color: var(--text-muted, #776a6d);
+      margin: 0;
+      font-size: 1rem;
+      font-family: 'Playfair Display', serif;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--text-primary, #3d0c1b);
     }
 
     .drawer-close-cross {
@@ -511,36 +487,59 @@
       font-size: 1.25rem;
       color: var(--text-primary, #3d0c1b);
       cursor: pointer;
+      padding: 4px;
+      line-height: 1;
     }
   }
 
-  .mobile-links-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 1.75rem;
+  /* Structural scroll section copy of the filters blueprint */
+  .filter-scroll-area {
+    padding: 0 1.5rem;
+    overflow-y: auto;
+    flex-grow: 1;
+    -webkit-overflow-scrolling: touch;
+  }
 
-    a {
-      text-decoration: none;
-      font-family: 'Inter', sans-serif;
-      font-size: 1.05rem;
-      font-weight: 400;
-      color: var(--text-primary, #3d0c1b);
-      display: block;
-      transition: color 0.2s ease;
+  .filter-group {
+    border-bottom: 1px solid var(--border-color, rgba(61, 12, 27, 0.08));
+    padding: 1.75rem 0;
 
-      &:hover, &.active-link {
-        color: var(--accent, #a22a45);
-        font-weight: 500;
-      }
+    &:last-child {
+      border-bottom: none;
     }
 
-    .divider-line {
-      height: 1px;
-      background-color: var(--border-color, rgba(61, 12, 27, 0.08));
-      margin: 0.5rem 0;
+    .group-title {
+      margin: 0 0 1.25rem 0;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--text-primary, #3d0c1b);
+    }
+  }
+}
+
+/* Luxury Custom Stack Link Structure Inside Drawer Content Areas */
+.custom-checkbox-stack {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 1.25rem !important;
+  width: 100%;
+
+  .drawer-nav-link {
+    text-decoration: none;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 0.95rem !important;
+    color: var(--text-muted, #776a6d) !important;
+    transition: all 0.25s ease;
+    display: block;
+    width: 100%;
+
+    &:hover, &.active-link {
+      color: var(--accent, #a22a45) !important;
+      font-weight: 500 !important;
+      transform: translateX(4px);
     }
   }
 }

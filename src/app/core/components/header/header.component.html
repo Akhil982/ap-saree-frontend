@@ -62,17 +62,33 @@
 <div class="mobile-nav-drawer" [class.drawer-open]="isMobileMenuOpen">
   <div class="drawer-backdrop" (click)="closeMobileMenu()"></div>
   <div class="drawer-content-card">
+    
     <div class="drawer-header">
-      <span class="drawer-title">CATEGORIES</span>
+      <h3 class="drawer-title">Navigation</h3>
       <button class="drawer-close-cross" (click)="closeMobileMenu()">✕</button>
     </div>
-    <ul class="mobile-links-list">
-      <li><a routerLink="/catalog" [queryParams]="{category: 'all'}" routerLinkActive="active-link" (click)="closeMobileMenu()">All Sarees</a></li>
-      <li><a routerLink="/catalog" [queryParams]="{category: 'banarasi'}" routerLinkActive="active-link" (click)="closeMobileMenu()">Banarasi Collection</a></li>
-      <li><a routerLink="/catalog" [queryParams]="{category: 'kanchipuram'}" routerLinkActive="active-link" (click)="closeMobileMenu()">Kanchipuram Silk</a></li>
-      <li><a routerLink="/catalog" [queryParams]="{category: 'linen'}" routerLinkActive="active-link" (click)="closeMobileMenu()">Linen & Cotton Fine Weaves</a></li>
-      <li class="divider-line"></li>
-      <li><a routerLink="/account" routerLinkActive="active-link" (click)="closeMobileMenu()">My Profile Details</a></li>
-    </ul>
+
+    <div class="filter-scroll-area">
+      
+      <div class="filter-group">
+        <h4 class="group-title">Saree Collections</h4>
+        <div class="custom-checkbox-stack">
+          <a routerLink="/catalog" [queryParams]="{category: 'all'}" routerLinkActive="active-link" class="drawer-nav-link" (click)="closeMobileMenu()">All Masterpieces</a>
+          <a routerLink="/catalog" [queryParams]="{category: 'banarasi'}" routerLinkActive="active-link" class="drawer-nav-link" (click)="closeMobileMenu()">Banarasi Collection</a>
+          <a routerLink="/catalog" [queryParams]="{category: 'kanchipuram'}" routerLinkActive="active-link" class="drawer-nav-link" (click)="closeMobileMenu()">Kanchipuram Silk</a>
+          <a routerLink="/catalog" [queryParams]="{category: 'linen'}" routerLinkActive="active-link" class="drawer-nav-link" (click)="closeMobileMenu()">Linen & Cotton Fine Weaves</a>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <h4 class="group-title">My Account</h4>
+        <div class="custom-checkbox-stack">
+          <a routerLink="/account" routerLinkActive="active-link" class="drawer-nav-link" (click)="closeMobileMenu()">Profile Details</a>
+          <a routerLink="/cart" routerLinkActive="active-link" class="drawer-nav-link" (click)="closeMobileMenu()">Shopping Cart</a>
+        </div>
+      </div>
+
+    </div>
+
   </div>
 </div>
