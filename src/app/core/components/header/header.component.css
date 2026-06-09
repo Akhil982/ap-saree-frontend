@@ -93,7 +93,7 @@
   }
 }
 
-/* --- 🛠️ RESOLVED: CLOSER MOBILE CONTAINER DECK --- */
+/* --- Interactive Action Panel Grid Layout --- */
 .header-actions {
   display: flex !important;
   align-items: center !important;
@@ -102,7 +102,7 @@
   flex-shrink: 0; 
 
   @media (max-width: 1024px) { gap: 0.75rem; }
-  @media (max-width: 768px) { gap: 0.4rem; } /* Pushes all 4 actions closer on phone screens */
+  @media (max-width: 768px) { gap: 0.4rem; } 
 
   .action-btn {
     background: transparent !important;
@@ -342,23 +342,22 @@
   }
 }
 
-/* --- 🛠️ RESOLVED: LOCKED CART LINK & BADGE ANCHORS --- */
-.cart-link {
+/* --- 🛠️ BULLETPROOF POSITIONING: ATTACH BADGE DIRECTLY TO BTN CIRCLE --- */
+.header-actions .action-btn.cart-link {
+  position: relative !important; 
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  position: relative;
 
-  .cart-icon-wrapper {
+  .nav-svg-icon {
     position: relative !important;
-    display: inline-block !important;
-    line-height: 0 !important;
+    z-index: 2 !important;
   }
 
   .cart-badge {
     position: absolute !important;
-    top: -3px !important;   /* Pulls item count into clear visual context */
-    right: -5px !important; /* Locks precisely next to the bag top handle loop */
+    top: 2px !important;    
+    right: 2px !important;  
     background-color: var(--text-primary) !important;
     color: var(--bg-primary) !important;
     font-family: 'Inter', sans-serif !important;
@@ -381,8 +380,8 @@
       min-width: 14px !important;
       height: 14px !important;
       font-size: 0.55rem !important;
-      top: -3px !important;
-      right: -4px !important;
+      top: 0px !important;   
+      right: 0px !important;
     }
   }
 }
