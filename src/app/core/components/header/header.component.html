@@ -5,7 +5,7 @@
       <button class="mobile-menu-btn" (click)="toggleMobileMenu()" aria-label="Open Navigation Menu" [class.active]="isMobileMenuOpen">
         <span class="hamburger-bar"></span>
       </button>
-      <a routerLink="/" class="logo">
+      <a routerLink="/" class="logo" (click)="closeMobileMenu()">
         HOUSE OF JAABILI<span class="luxury-dot">.</span>
       </a>
     </div>
@@ -20,7 +20,7 @@
     </nav>
 
     <div class="search-box">
-      <input type="text" placeholder="Search weaves..." />
+      <input type="text" placeholder="Search..." />
       <button class="search-submit-btn" aria-label="Search">
         <svg class="nav-svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
@@ -58,3 +58,21 @@
 
   </div>
 </header>
+
+<div class="mobile-nav-drawer" [class.drawer-open]="isMobileMenuOpen">
+  <div class="drawer-backdrop" (click)="closeMobileMenu()"></div>
+  <div class="drawer-content-card">
+    <div class="drawer-header">
+      <span class="drawer-title">CATEGORIES</span>
+      <button class="drawer-close-cross" (click)="closeMobileMenu()">✕</button>
+    </div>
+    <ul class="mobile-links-list">
+      <li><a routerLink="/catalog" [queryParams]="{category: 'all'}" routerLinkActive="active-link" (click)="closeMobileMenu()">All Sarees</a></li>
+      <li><a routerLink="/catalog" [queryParams]="{category: 'banarasi'}" routerLinkActive="active-link" (click)="closeMobileMenu()">Banarasi Collection</a></li>
+      <li><a routerLink="/catalog" [queryParams]="{category: 'kanchipuram'}" routerLinkActive="active-link" (click)="closeMobileMenu()">Kanchipuram Silk</a></li>
+      <li><a routerLink="/catalog" [queryParams]="{category: 'linen'}" routerLinkActive="active-link" (click)="closeMobileMenu()">Linen & Cotton Fine Weaves</a></li>
+      <li class="divider-line"></li>
+      <li><a routerLink="/account" routerLinkActive="active-link" (click)="closeMobileMenu()">My Profile Details</a></li>
+    </ul>
+  </div>
+</div>
