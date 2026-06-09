@@ -2,12 +2,14 @@
   
   <app-header></app-header>
 
-  <main class="main-content" [class.blur-store-backdrop]="!isUserLoggedIn()">
+  <!-- The backdrop blurs only if they aren't logged in AND haven't explicitly skipped as a guest -->
+  <main class="main-content" [class.blur-store-backdrop]="shouldShowAuthOverlay()">
     <router-outlet></router-outlet>
   </main>
 
 </div>
 
-<div class="store-auth-overlay-modal" *ngIf="!isUserLoggedIn()">
+<!-- Uses the updated condition checking rule matrix -->
+<div class="store-auth-overlay-modal" *ngIf="shouldShowAuthOverlay()">
   <app-auth></app-auth>
 </div>

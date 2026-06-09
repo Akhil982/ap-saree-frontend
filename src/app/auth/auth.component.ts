@@ -69,10 +69,8 @@ export class AuthComponent implements OnInit {
         response => {
           this.isLoading = false;
           this.successMessage = response.message || 'Login successful!';
-          
-          // Securely write the JWT session string key to memory storage layers
           localStorage.setItem('zari_token', response.token);
-          
+          localStorage.setItem('user_email', this.email); // 💡 Save the email address here!
           // Re-trigger the application matrix state view frame after a smooth delay
           setTimeout(() => {
             window.location.reload();
@@ -83,5 +81,12 @@ export class AuthComponent implements OnInit {
           this.errorMessage = error.error?.error || 'Invalid or expired passcode sequence.';
         }
       );
+  }
+
+  dismissAuthModal(): void {
+  // Sets a temporary flag in session storage so the application knows the guest chose to skip
+  sessionStorage.setItem('guest_skipped_auth', 'true');
+  // Optional: Trigger a state change or window reload to clear modal states if necessary
+  window.location.reload(); 
   }
 }

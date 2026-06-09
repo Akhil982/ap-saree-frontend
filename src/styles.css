@@ -1,32 +1,34 @@
 /* --- Unified Theme Palette Definitions --- */
 :root {
-  /* Default System Fallbacks (Light Mode Preferred) */
+  /* 💡 FIXED: Light Mode Default Typography Color changed from #111111 to Burgundy Red */
   --bg-primary: #ffffff;
   --bg-surface: #fcfbfa; 
-  --text-primary: #111111;
-  --text-muted: #666666;
-  --accent: #800020; /* Royal Burgundy Master Token */
+  --text-primary: #800020; /* Royal Burgundy text color default */
+  --text-muted: #8b5a6c;   /* Tinted muted color to match the red aesthetic */
+  --accent: #800020;       
   --border-color: #e5e0db;
   --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 /* Explicit class hooks bound directly to application theme toggles */
 body.light-theme {
+  /* 💡 FIXED: Kept synchronized with the new red typography rules */
   --bg-primary: #ffffff;
   --bg-surface: #fcfbfa;
-  --text-primary: #111111;
-  --text-muted: #666666;
+  --text-primary: #800020; /* Royal Burgundy text color */
+  --text-muted: #8b5a6c;   
   --accent: #800020;
   --border-color: #e5e0db;
   --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 body.dark-theme {
+  /* 🔐 UNCHANGED: Preserved your exact high-contrast dark palette specifications */
   --bg-primary: #121212;
   --bg-surface: #1e1e1e; 
   --text-primary: #f5f5f5;
   --text-muted: #a0a0a0;
-  --accent: #ff4081; /* High-contrast variant */
+  --accent: #ff4081; 
   --border-color: #2c2c2c;
   --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.5);
 }

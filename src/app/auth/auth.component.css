@@ -135,3 +135,23 @@
 .fallback-link:hover {
   color: var(--text-primary);
 }
+
+.auth-card-panel {
+  position: relative; /* Allows positioning close icon accurately */
+}
+
+.guest-close-btn {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  background: transparent;
+  border: none;
+  color: var(--text-muted, #a0a0a0);
+  font-size: 1.3rem;
+  cursor: pointer;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: var(--text-primary, #ffffff);
+  }
+}

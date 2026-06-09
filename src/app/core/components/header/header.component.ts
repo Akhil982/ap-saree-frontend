@@ -8,12 +8,24 @@ import { Component, OnInit } from '@angular/core';
 export class HeaderComponent implements OnInit {
   isDarkMode: boolean = false;
   isMobileMenuOpen: boolean = false;
-  cartCount: number = 2; // Dynamic basket tracking marker element
+  cartCount: number = 2;
 
   ngOnInit(): void {
     this.initializeThemeState();
   }
 
+  // 💡 NEW: Check validation state inside template view mappings
+  isLoggedIn(): boolean {
+    return localStorage.getItem('zari_token') !== null;
+  }
+
+  // 💡 NEW: Extract email string for display output text layer bindings
+  getUserEmail(): string {
+    const email = localStorage.getItem('user_email');
+    return email ? email : '';
+  }
+
+  // Keep all your previous theme and menu toggle functions down here unchanged...
   private initializeThemeState(): void {
     const savedTheme = localStorage.getItem('app-theme');
     if (savedTheme) {
