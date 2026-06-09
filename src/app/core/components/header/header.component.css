@@ -12,9 +12,9 @@
 }
 
 .header-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
   width: 100%;
   max-width: 100vw;
   height: 85px; 
@@ -22,8 +22,8 @@
   margin: 0 auto;
   box-sizing: border-box;
   
-  @media (max-width: 1024px) { height: 75px; padding: 0 1.5rem; }
-  @media (max-width: 768px) { height: 65px; padding: 0 1rem; }
+  @media (max-width: 1024px) { height: 75px; padding: 0 1.25rem; }
+  @media (max-width: 768px) { height: 65px; padding: 0 0.75rem; }
 }
 
 /* --- Brand Logo Alignment --- */
@@ -50,7 +50,8 @@
       font-size: 1.8rem;         
       line-height: 0;
     }
-    @media (max-width: 768px) { font-size: 1.05rem; }
+    @media (max-width: 768px) { font-size: 1.05rem; letter-spacing: 0.5px; }
+    @media (max-width: 360px) { font-size: 0.95rem; }
   }
 }
 
@@ -92,25 +93,27 @@
   }
 }
 
-/* --- Main Actions Wrapper --- */
+/* --- 🛠️ RESOLVED: CLOSER MOBILE CONTAINER DECK --- */
 .header-actions {
-  display: flex;
-  align-items: center;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
   gap: 1.25rem;
   flex-shrink: 0; 
-  justify-content: flex-end;
-  @media (max-width: 768px) { gap: 0.75rem; }
+
+  @media (max-width: 1024px) { gap: 0.75rem; }
+  @media (max-width: 768px) { gap: 0.4rem; } /* Pushes all 4 actions closer on phone screens */
 
   .action-btn {
-    background: transparent;
-    border: none;
-    outline: none;
+    background: transparent !important;
+    border: none !important;
+    outline: none !important;
     cursor: pointer;
     color: var(--text-primary);
     padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
     border-radius: 50%;
     flex-shrink: 0;
     width: 40px;
@@ -130,7 +133,7 @@
   }
 }
 
-/* --- 🌟 RESOLVED: CAPSULE SEARCH ENGINE --- */
+/* --- Capsule Search Engine --- */
 .search-box {
   display: flex;
   align-items: center;
@@ -172,9 +175,9 @@
     border: none !important;
     outline: none !important;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
     width: 32px;
     height: 32px;
     border-radius: 50%;
@@ -193,24 +196,28 @@
     background: transparent !important;
     border: none !important;
     padding: 0 !important;
-    width: auto;
-    height: auto;
+    width: auto !important;
+    height: auto !important;
+    margin: 0 !important;
 
     input.search-input { display: none !important; }
     
     button.search-submit-btn {
-      width: 40px;
-      height: 40px;
+      width: 40px !important;
+      height: 40px !important;
       &:hover { background-color: rgba(128, 0, 32, 0.05); }
       .nav-svg-icon { width: 22px !important; height: 22px !important; }
     }
+  }
+  @media (max-width: 768px) {
+    button.search-submit-btn { width: 34px !important; height: 34px !important; .nav-svg-icon { width: 19px !important; height: 19px !important; } }
   }
 }
 
 /* --- Theme Mode Capsule Toggle Button --- */
 .theme-toggle {
-  display: flex;
-  align-items: center;
+  display: flex !important;
+  align-items: center !important;
   gap: 6px;
   background-color: var(--text-primary); 
   color: var(--bg-primary);
@@ -234,9 +241,9 @@
     height: 40px;
     padding: 0;
     width: 40px; 
-    justify-content: center;
+    justify-content: center !important;
     border-radius: 50%;
-    background-color: transparent;
+    background-color: transparent !important;
     color: var(--text-primary);
     &:hover { background-color: rgba(128, 0, 32, 0.05); }
     .theme-text { display: none; } 
@@ -253,7 +260,7 @@
   }
 }
 
-/* --- 🌟 RESOLVED: PROFILE ICON & STATUS OVERLAYS --- */
+/* --- Profile Icon & Status Overlays --- */
 .profile-display-context {
   position: relative;
   display: flex;
@@ -335,35 +342,47 @@
   }
 }
 
-/* --- Cart Numerical Overlay --- */
+/* --- 🛠️ RESOLVED: LOCKED CART LINK & BADGE ANCHORS --- */
 .cart-link {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  position: relative;
+
+  .cart-icon-wrapper {
+    position: relative !important;
+    display: inline-block !important;
+    line-height: 0 !important;
+  }
+
   .cart-badge {
-    position: absolute;
-    top: 1px;
-    right: 1px;
-    background-color: var(--text-primary);
-    color: var(--bg-primary);
-    font-family: 'Inter', sans-serif;
-    font-size: 0.65rem;
-    font-weight: 600;
-    min-width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 3px;
-    box-sizing: border-box;
-    line-height: 1;
-    z-index: 5;
-    border: 1.5px solid var(--bg-primary);
+    position: absolute !important;
+    top: -3px !important;   /* Pulls item count into clear visual context */
+    right: -5px !important; /* Locks precisely next to the bag top handle loop */
+    background-color: var(--text-primary) !important;
+    color: var(--bg-primary) !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 0.65rem !important;
+    font-weight: 600 !important;
+    min-width: 16px !important;
+    height: 16px !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 3px !important;
+    box-sizing: border-box !important;
+    line-height: 1 !important;
+    z-index: 5 !important;
+    border: 1.5px solid var(--bg-primary) !important;
+    margin: 0 !important;
     
     @media (max-width: 768px) {
-      min-width: 14px;
-      height: 14px;
-      font-size: 0.55rem;
-      top: 0;
-      right: 0;
+      min-width: 14px !important;
+      height: 14px !important;
+      font-size: 0.55rem !important;
+      top: -3px !important;
+      right: -4px !important;
     }
   }
 }
@@ -375,7 +394,7 @@
   outline: none;
   cursor: pointer;
   padding: 0;
-  margin-right: 0.75rem;
+  margin-right: 0.5rem;
   display: none;
   align-items: center;
   justify-content: center;
@@ -384,7 +403,7 @@
   height: 40px;
 
   @media (max-width: 1024px) { display: flex; }
-  @media (max-width: 768px) { margin-right: 0.25rem; width: 34px; height: 34px; }
+  @media (max-width: 768px) { margin-right: 0.2rem; width: 34px; height: 34px; }
 
   .hamburger-bar {
     display: block;
