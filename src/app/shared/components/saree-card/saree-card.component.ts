@@ -5,12 +5,12 @@ export interface SareeItem {
   title: string;
   fabric: string;
   price: number;
-  discountPrice?: number;
+  discountPrice?: number | null; // 🌟 Added '| null' to handle API structure
   primaryImage: string;
-  hoverImage?: string;
+  hoverImage?: string | null;    // 🌟 Added '| null' here as well for safety
   isExclusive?: boolean;
   stockCount: number;
-  colors?: string[]; // 💡 Matches catalog file interfaces perfectly
+  colors?: string[]; 
 }
 
 @Component({

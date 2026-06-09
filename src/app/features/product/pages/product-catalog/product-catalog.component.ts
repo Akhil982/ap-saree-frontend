@@ -1,18 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-export interface SareeItem {
-  id: string;
-  title: string;
-  fabric: string;
-  price: number;
-  discountPrice?: number;
-  primaryImage: string;
-  hoverImage?: string;
-  isExclusive?: boolean;
-  stockCount: number;
-  colors?: string[]; 
-}
+import { HttpClient } from '@angular/common/http'; // Ensure HttpClientModule is imported in your AppModule
+import { SareeItem } from 'src/app/shared/components/saree-card/saree-card.component';
 
 export interface SwatchColor {
   name: string;
@@ -27,102 +16,186 @@ export interface SwatchColor {
 })
 export class ProductCatalogComponent implements OnInit {
   isFilterOpen = false;
-  fabrics: string[] = ['Kanchipuram Silk', 'Banarasi Silk', 'Chanderi', 'Organza', 'Georgette'];
+  
+  // Master copy from backend API database instance
+  allSarees: SareeItem[] = [];
+  // Screen data representation pipeline altered by search filters and sorters
+  mockSarees: SareeItem[] = [];
 
-  colors: SwatchColor[] = [
-    { name: 'Midnight Burgundy', hex: '#3d0c1b', isLight: false },
-    { name: 'Royal Navy', hex: '#1d2244', isLight: false },
-    { name: 'Pure Emerald', hex: '#0a4223', isLight: false },
-    { name: 'Antique Gold', hex: '#d4af37', isLight: false },
-    { name: 'Ivory Cream', hex: '#fdfbf7', isLight: true },
-    { name: 'Blush Pink', hex: '#e8c5c8', isLight: true }
-  ];
+  // Dynamic filter arrays generated from the backend data
+  fabrics: string[] = [];
+  colors: SwatchColor[] = [];
 
-  // 💡 PRICE SLIDER RANGE STATE TOKENS
+  // Selected filter states
+  selectedFabrics: Set<string> = new Set();
+  selectedColors: Set<string> = new Set();
+
+  // Price Slider Configuration Values 
   minPriceLimit = 0;
   maxPriceLimit = 50000;
   currentMinPrice = 0;
   currentMaxPrice = 50000;
-  
-  // Percentages to fill the active slider bar accent line background color
   minPercent = 0;
   maxPercent = 100;
 
-  mockSarees: SareeItem[] = [
-    {
-      id: 'sar-01',
-      title: 'Midnight Burgundy Kanchipuram Pure Silk Saree',
-      fabric: 'Kanchipuram Silk',
-      price: 16500,
-      discountPrice: 19500,
-      primaryImage: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=600&q=80',
-      hoverImage: 'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?w=600&q=80',
-      isExclusive: true,
-      stockCount: 2,
-      colors: ['#3d0c1b', '#1d2244', '#0a4223', '#d4af37']
-    },
-    {
-      id: 'sar-02',
-      title: 'Royal Ivory Gold Banarasi Zari Brocade',
-      fabric: 'Banarasi Silk',
-      price: 24000,
-      stockCount: 4,
-      primaryImage: 'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?w=600&q=80',
-      colors: ['#fdfbf7', '#d4af37']
-    },
-    {
-      id: 'sar-03',
-      title: 'Vintage Rose Organza Hand-Painted Saree',
-      fabric: 'Organza',
-      price: 12500,
-      stockCount: 1,
-      primaryImage: 'https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=600&q=80',
-      colors: ['#e8c5c8', '#a22a45', '#3d0c1b', '#0a4223']
-    }
-  ];
+  // Static fallback palette lookups for hex matches
+  private colorPaletteMap: { [key: string]: { name: string, isLight: boolean } } = {
+    '#3D0C1B': { name: 'Midnight Burgundy', isLight: false },
+    '#3d0c1b': { name: 'Midnight Burgundy', isLight: false },
+    '#1D2244': { name: 'Royal Navy', isLight: false },
+    '#1d2244': { name: 'Royal Navy', isLight: false },
+    '#0A4223': { name: 'Pure Emerald', isLight: false },
+    '#0a4223': { name: 'Pure Emerald', isLight: false },
+    '#D4AF37': { name: 'Antique Gold', isLight: false },
+    '#d4af37': { name: 'Antique Gold', isLight: false },
+    '#FDFBF7': { name: 'Ivory Cream', isLight: true },
+    '#fdfbf7': { name: 'Ivory Cream', isLight: true },
+    '#E8C5C8': { name: 'Blush Pink', isLight: true },
+    '#e8c5c8': { name: 'Blush Pink', isLight: true },
+    '#A22A45': { name: 'Crimson Red', isLight: false },
+    '#900C3F': { name: 'Heritage Maroon', isLight: false },
+    '#C70039': { name: 'Chili Ruby', isLight: false },
+    '#FFC300': { name: 'Sun Gold', isLight: true },
+    '#A2B9B2': { name: 'Mint Sage', isLight: true },
+    '#E2ECE9': { name: 'Soft Mist', isLight: true },
+    '#FFFFFF': { name: 'Pure White', isLight: true },
+    '#E5A93C': { name: 'Mustard Gold', isLight: false },
+    '#333333': { name: 'Charcoal Black', isLight: false },
+    '#9E2A2B': { name: 'Earthy Terracotta', isLight: false },
+    '#005F73': { name: 'Deep Peacock', isLight: false },
+    '#0A9396': { name: 'Teal Lagoon', isLight: false },
+    '#EE9B00': { name: 'Amber Gold', isLight: false },
+    '#4A5568': { name: 'Slate Indigo', isLight: false },
+    '#718096': { name: 'Pastel Slate', isLight: false },
+    '#E2E8F0': { name: 'Silver Ash', isLight: true },
+    '#C46210': { name: 'Burnt Terracotta', isLight: false },
+    '#D2B48C': { name: 'Tan Khaki', isLight: true },
+    '#5C4033': { name: 'Dark Walnut', isLight: false },
+    '#111111': { name: 'Jet Black', isLight: false },
+    '#E5E5E5': { name: 'Gota Platinum', isLight: true }
+  };
+
+  constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    this.updateSliderTrackFill();
+    this.fetchCatalogData();
   }
 
-  // 💡 CALCULATION ENGINE: Dynamically maps background percentage bounds for the highlight bar
+  fetchCatalogData(): void {
+    // Replace with your real API URL endpoint (e.g., 'http://localhost:8080/api/products')
+    this.http.get<SareeItem[]>('https://ap-saree-store.onrender.com/ap-saree-store/api/products').subscribe({
+      next: (data) => {
+        this.allSarees = data;
+        this.mockSarees = [...data];
+        
+        this.calculatePriceLimits();
+        this.buildDynamicFilters();
+        this.updateSliderTrackFill();
+      },
+      error: (err) => {
+        console.error('Failed to load live premium items pipeline:', err);
+      }
+    });
+  }
+
+  buildDynamicFilters(): void {
+    const rawFabrics = new Set<string>();
+    const rawColors = new Set<string>();
+
+    this.allSarees.forEach(saree => {
+      if (saree.fabric) rawFabrics.add(saree.fabric);
+      saree.colors?.forEach(colorHex => rawColors.add(colorHex));
+    });
+
+    this.fabrics = Array.from(rawFabrics).sort();
+    
+    this.colors = Array.from(rawColors).map(hex => {
+      const info = this.colorPaletteMap[hex];
+      return {
+        name: info ? info.name : `Palette ${hex}`,
+        hex: hex,
+        isLight: info ? info.isLight : false
+      };
+    }).sort((a, b) => a.name.localeCompare(b.name));
+  }
+
+  calculatePriceLimits(): void {
+    if (this.allSarees.length === 0) return;
+    const prices = this.allSarees.map(s => s.price);
+    
+    this.minPriceLimit = Math.floor(Math.min(...prices) / 1000) * 1000;
+    this.maxPriceLimit = Math.ceil(Math.max(...prices) / 1000) * 1000;
+    
+    this.currentMinPrice = this.minPriceLimit;
+    this.currentMaxPrice = this.maxPriceLimit;
+  }
+
   updateSliderTrackFill(): void {
     const totalRange = this.maxPriceLimit - this.minPriceLimit;
+    if (totalRange === 0) {
+      this.minPercent = 0;
+      this.maxPercent = 100;
+      return;
+    }
     this.minPercent = ((this.currentMinPrice - this.minPriceLimit) / totalRange) * 100;
     this.maxPercent = ((this.currentMaxPrice - this.minPriceLimit) / totalRange) * 100;
+  }
+
+  applyActiveFilters(): void {
+    this.mockSarees = this.allSarees.filter(saree => {
+      const matchesFabric = this.selectedFabrics.size === 0 || this.selectedFabrics.has(saree.fabric);
+      
+      const matchesColor = this.selectedColors.size === 0 || 
+        saree.colors?.some(c => this.selectedColors.has(c));
+
+      const matchesPrice = saree.price >= this.currentMinPrice && saree.price <= this.currentMaxPrice;
+
+      return matchesFabric && matchesColor && matchesPrice;
+    });
+  }
+
+  filterByFabric(fabric: string): void {
+    if (this.selectedFabrics.has(fabric)) {
+      this.selectedFabrics.delete(fabric);
+    } else {
+      this.selectedFabrics.add(fabric);
+    }
+    this.applyActiveFilters();
+  }
+
+  filterByColor(colorHex: string): void {
+    if (this.selectedColors.has(colorHex)) {
+      this.selectedColors.delete(colorHex);
+    } else {
+      this.selectedColors.add(colorHex);
+    }
+    this.applyActiveFilters();
   }
 
   onMinPriceInput(event: Event): void {
     const input = event.target as HTMLInputElement;
     let val = parseInt(input.value, 10);
     
-    // Prevent min thumb from sliding past the max thumb minus a tiny safety gap
-    if (val >= this.currentMaxPrice - 2000) {
-      val = this.currentMaxPrice - 2000;
+    if (val >= this.currentMaxPrice - 1000) {
+      val = this.currentMaxPrice - 1000;
       input.value = val.toString();
     }
     this.currentMinPrice = val;
     this.updateSliderTrackFill();
-    this.filterByPrice(this.currentMinPrice, this.currentMaxPrice);
+    this.applyActiveFilters();
   }
 
   onMaxPriceInput(event: Event): void {
     const input = event.target as HTMLInputElement;
     let val = parseInt(input.value, 10);
 
-    // Prevent max thumb from sliding lower than the min thumb plus a safety gap
-    if (val <= this.currentMinPrice + 2000) {
-      val = this.currentMinPrice + 2000;
+    if (val <= this.currentMinPrice + 1000) {
+      val = this.currentMinPrice + 1000;
       input.value = val.toString();
     }
     this.currentMaxPrice = val;
     this.updateSliderTrackFill();
-    this.filterByPrice(this.currentMinPrice, this.currentMaxPrice);
-  }
-
-  toggleFilterDrawer(): void {
-    this.isFilterOpen = !this.isFilterOpen;
-    document.body.style.overflow = this.isFilterOpen ? 'hidden' : '';
+    this.applyActiveFilters();
   }
 
   onSortChange(event: Event): void {
@@ -132,15 +205,17 @@ export class ProductCatalogComponent implements OnInit {
       this.mockSarees.sort((a, b) => a.price - b.price);
     } else if (strategy === 'high-low') {
       this.mockSarees.sort((a, b) => b.price - a.price);
+    } else {
+      this.applyActiveFilters(); // Standard featured display setup resetting bounds
     }
   }
 
-  filterByFabric(fabric: string): void { console.log('Fabric filter applied:', fabric); }
-  filterByColor(colorName: string): void { console.log('Color filter applied:', colorName); }
-  
-  filterByPrice(min: number, max: number): void { 
-    console.log(`Live Filtering Price Range Array Bound Strategy: ₹${min} — ₹${max}`);
+  toggleFilterDrawer(): void {
+    this.isFilterOpen = !this.isFilterOpen;
+    document.body.style.overflow = this.isFilterOpen ? 'hidden' : '';
   }
 
-  handleQuickAdd(item: SareeItem): void { console.log('Item Quick-Added:', item.title); }
+  handleQuickAdd(item: SareeItem): void { 
+    console.log('Item Quick-Added:', item.title); 
+  }
 }

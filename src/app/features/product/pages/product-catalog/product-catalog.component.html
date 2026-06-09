@@ -1,120 +1,120 @@
-  <div class="catalog-container full-viewport-bleed">
+<div class="catalog-container full-viewport-bleed">
+  
+  <div class="mobile-action-bar">
+    <button class="filter-trigger-btn" (click)="toggleFilterDrawer()">
+      <span class="control-icon">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+          <line x1="4" y1="21" x2="4" y2="14" /><line x1="4" y1="10" x2="4" y2="3" />
+          <line x1="12" y1="21" x2="12" y2="12" /><line x1="12" y1="8" x2="12" y2="3" />
+          <line x1="20" y1="21" x2="20" y2="16" /><line x1="20" y1="12" x2="20" y2="3" />
+          <line x1="1" y1="14" x2="7" y2="14" /><line x1="9" y1="8" x2="15" y2="8" /><line x1="17" y1="16" x2="23" y2="16" />
+        </svg>
+      </span>
+      <span class="btn-text">Filter</span>
+    </button>
     
-    <div class="mobile-action-bar">
-      <button class="filter-trigger-btn" (click)="toggleFilterDrawer()">
-        <span class="control-icon">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
-            <line x1="4" y1="21" x2="4" y2="14" /><line x1="4" y1="10" x2="4" y2="3" />
-            <line x1="12" y1="21" x2="12" y2="12" /><line x1="12" y1="8" x2="12" y2="3" />
-            <line x1="20" y1="21" x2="20" y2="16" /><line x1="20" y1="12" x2="20" y2="3" />
-            <line x1="1" y1="14" x2="7" y2="14" /><line x1="9" y1="8" x2="15" y2="8" /><line x1="17" y1="16" x2="23" y2="16" />
-          </svg>
-        </span>
-        <span class="btn-text">Filter</span>
-      </button>
-      
-      <div class="custom-dropdown-wrapper">
-        <select class="sort-select-dropdown" (change)="onSortChange($event)">
-          <option value="featured">Sort: Featured</option>
-          <option value="low-high">Price: Low to High</option>
-          <option value="high-low">Price: High to Low</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="layout-wrapper">
-      <aside class="filter-sidebar" [class.drawer-open]="isFilterOpen">
-        <div class="drawer-header">
-          <h3 class="drawer-title">Filter Artistry</h3>
-          <button class="close-drawer-btn" (click)="toggleFilterDrawer()" aria-label="Close Filter Menu">✕</button>
-        </div>
-
-        <div class="filter-scroll-area">
-          <div class="filter-group">
-            <h4 class="group-title">Fabric Type</h4>
-            <div class="custom-checkbox-stack">
-              <label class="checkbox-container" *ngFor="let fabric of fabrics">
-                <input type="checkbox" (change)="filterByFabric(fabric)" />
-                <span class="premium-checkmark"></span>
-                <span class="label-text">{{ fabric }}</span>
-              </label>
-            </div>
-          </div>
-
-          <div class="filter-group">
-            <h4 class="group-title">Curated Palette</h4>
-            <div class="luxury-color-stack">
-              <label class="color-row-container" *ngFor="let color of colors">
-                <input type="checkbox" (change)="filterByColor(color.name)" />
-                <span class="swatch-circle" [style.backgroundColor]="color.hex" [class.light-border]="color.isLight">
-                  <span class="swatch-mini-dot"></span>
-                </span>
-                <span class="color-title-label">{{ color.name }}</span>
-              </label>
-            </div>
-          </div>
-
-                  <div class="filter-group">
-            <h4 class="group-title">Price Range</h4>
-            <div class="luxury-price-slider-wrapper">
-              
-              <div class="price-value-readout">
-                <span class="price-node">₹{{ currentMinPrice | number }}</span>
-                <span class="price-delimiter">—</span>
-                <span class="price-node">₹{{ currentMaxPrice | number }}</span>
-              </div>
-
-              <div class="range-slider-container">
-                <div class="slider-track-line"
-                    [style.left.%]="minPercent"
-                    [style.right.%]="100 - maxPercent">
-                </div>
-                
-                <input type="range" 
-                      [min]="minPriceLimit" 
-                      [max]="maxPriceLimit" 
-                      [value]="currentMinPrice" 
-                      step="500"
-                      class="input-thumb-node" 
-                      [style.zIndex]="currentMinPrice > (maxPriceLimit / 2) ? '6' : '4'"
-                      (input)="onMinPriceInput($event)" />
-
-                <input type="range" 
-                      [min]="minPriceLimit" 
-                      [max]="maxPriceLimit" 
-                      [value]="currentMaxPrice" 
-                      step="500"
-                      class="input-thumb-node" 
-                      [style.zIndex]="currentMinPrice > (maxPriceLimit / 2) ? '4' : '6'"
-                      (input)="onMaxPriceInput($event)" />
-              </div>
-
-            </div>
-          </div>
-        </div>
-      </aside>
-
-      <div class="drawer-overlay" *ngIf="isFilterOpen" (click)="toggleFilterDrawer()"></div>
-
-      <main class="grid-panel">
-        <div class="grid-header desktop-only">
-          <p class="results-count">{{ mockSarees.length }} Masterpieces Curated</p>
-          <div class="custom-dropdown-wrapper">
-            <select class="sort-select-dropdown" (change)="onSortChange($event)">
-              <option value="featured">Featured Collection</option>
-              <option value="low-high">Price: Low to High</option>
-              <option value="high-low">Price: High to Low</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="saree-grid">
-          <app-saree-card 
-            *ngFor="let item of mockSarees" 
-            [saree]="item"
-            (addToCart)="handleQuickAdd($event)">
-          </app-saree-card>
-        </div>
-      </main>
+    <div class="custom-dropdown-wrapper">
+      <select class="sort-select-dropdown" (change)="onSortChange($event)">
+        <option value="featured">Sort: Featured</option>
+        <option value="low-high">Price: Low to High</option>
+        <option value="high-low">Price: High to Low</option>
+      </select>
     </div>
   </div>
+
+  <div class="layout-wrapper">
+    <aside class="filter-sidebar" [class.drawer-open]="isFilterOpen">
+      <div class="drawer-header">
+        <h3 class="drawer-title">Filter Artistry</h3>
+        <button class="close-drawer-btn" (click)="toggleFilterDrawer()" aria-label="Close Filter Menu">✕</button>
+      </div>
+
+      <div class="filter-scroll-area">
+        <div class="filter-group" *ngIf="fabrics.length > 0">
+          <h4 class="group-title">Fabric Type</h4>
+          <div class="custom-checkbox-stack">
+            <label class="checkbox-container" *ngFor="let fabric of fabrics">
+              <input type="checkbox" (change)="filterByFabric(fabric)" />
+              <span class="premium-checkmark"></span>
+              <span class="label-text">{{ fabric }}</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="filter-group" *ngIf="colors.length > 0">
+          <h4 class="group-title">Curated Palette</h4>
+          <div class="luxury-color-stack">
+            <label class="color-row-container" *ngFor="let color of colors">
+              <input type="checkbox" (change)="filterByColor(color.hex)" />
+              <span class="swatch-circle" [style.backgroundColor]="color.hex" [class.light-border]="color.isLight">
+                <span class="swatch-mini-dot"></span>
+              </span>
+              <span class="color-title-label">{{ color.name }}</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <h4 class="group-title">Price Range</h4>
+          <div class="luxury-price-slider-wrapper">
+            
+            <div class="price-value-readout">
+              <span class="price-node">₹{{ currentMinPrice | number }}</span>
+              <span class="price-delimiter">—</span>
+              <span class="price-node">₹{{ currentMaxPrice | number }}</span>
+            </div>
+
+            <div class="range-slider-container">
+              <div class="slider-track-line"
+                  [style.left.%]="minPercent"
+                  [style.right.%]="100 - maxPercent">
+              </div>
+              
+              <input type="range" 
+                    [min]="minPriceLimit" 
+                    [max]="maxPriceLimit" 
+                    [value]="currentMinPrice" 
+                    step="500"
+                    class="input-thumb-node" 
+                    [style.zIndex]="currentMinPrice > (maxPriceLimit / 2) ? '6' : '4'"
+                    (input)="onMinPriceInput($event)" />
+
+              <input type="range" 
+                    [min]="minPriceLimit" 
+                    [max]="maxPriceLimit" 
+                    [value]="currentMaxPrice" 
+                    step="500"
+                    class="input-thumb-node" 
+                    [style.zIndex]="currentMinPrice > (maxPriceLimit / 2) ? '4' : '6'"
+                    (input)="onMaxPriceInput($event)" />
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <div class="drawer-overlay" *ngIf="isFilterOpen" (click)="toggleFilterDrawer()"></div>
+
+    <main class="grid-panel">
+      <div class="grid-header desktop-only">
+        <p class="results-count">{{ mockSarees.length }} Masterpieces Curated</p>
+        <div class="custom-dropdown-wrapper">
+          <select class="sort-select-dropdown" (change)="onSortChange($event)">
+            <option value="featured">Featured Collection</option>
+            <option value="low-high">Price: Low to High</option>
+            <option value="high-low">Price: High to Low</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="saree-grid">
+        <app-saree-card 
+          *ngFor="let item of mockSarees" 
+          [saree]="item"
+          (addToCart)="handleQuickAdd($event)">
+        </app-saree-card>
+      </div>
+    </main>
+  </div>
+</div>

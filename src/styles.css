@@ -1,6 +1,6 @@
 /* --- Unified Theme Palette Definitions --- */
 :root {
-  /* 💡 FIXED: Light Mode Default Typography Color changed from #111111 to Burgundy Red */
+  /* Light Mode Default Typography Color changed from #111111 to Burgundy Red */
   --bg-primary: #ffffff;
   --bg-surface: #fcfbfa; 
   --text-primary: #800020; /* Royal Burgundy text color default */
@@ -12,7 +12,7 @@
 
 /* Explicit class hooks bound directly to application theme toggles */
 body.light-theme {
-  /* 💡 FIXED: Kept synchronized with the new red typography rules */
+  /* Kept synchronized with the new red typography rules */
   --bg-primary: #ffffff;
   --bg-surface: #fcfbfa;
   --text-primary: #800020; /* Royal Burgundy text color */
@@ -23,7 +23,7 @@ body.light-theme {
 }
 
 body.dark-theme {
-  /* 🔐 UNCHANGED: Preserved your exact high-contrast dark palette specifications */
+  /* Preserved your exact high-contrast dark palette specifications */
   --bg-primary: #121212;
   --bg-surface: #1e1e1e; 
   --text-primary: #f5f5f5;
@@ -66,4 +66,63 @@ body {
 /* Global Reset box-sizing rule safely enforced across all rendering nodes */
 *, *:before, *:after {
   box-sizing: border-box;
+}
+
+/* ==========================================================================
+   🛠️ GLOBAL RESET ADDITIONS: Normalizes Form Controls & Structural Actions
+   ========================================================================== */
+
+/* Force completely clean inputs without browser-enforced boxes or styling overrides */
+input, 
+textarea, 
+select {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  background: transparent;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  margin: 0;
+  padding: 0;
+  border-radius: 0;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* Completely strip ugly native button styling and grey borders */
+button {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  background: transparent;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  text-align: inherit;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+input:focus,
+button:focus {
+  outline: none;
+}
+
+/* Smooth out standard links so they inherit your theme-palette configurations */
+a {
+  color: inherit;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* SVG icon alignment fallback to prevent vertical shifting */
+svg {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
 }
