@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core'; // 1. Import HostListener
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -8,31 +9,49 @@ import { Component, OnInit } from '@angular/core';
 export class HeaderComponent implements OnInit {
   isDarkMode: boolean = false;
   isMobileMenuOpen: boolean = false;
+  isProfileDropdownOpen: boolean = false;
   cartCount: number = 2;
+
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
     this.initializeThemeState();
   }
 
-  // 💡 NEW: Check validation state inside template view mappings
+  // 2. NEW: Close dropdown when clicking outside
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: Event): void {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.profile-display-context')) {
+      this.isProfileDropdownOpen = false;
+    }
+  }
+
   isLoggedIn(): boolean {
     return localStorage.getItem('zari_token') !== null;
   }
 
-  // 💡 NEW: Extract email string for display output text layer bindings
   getUserEmail(): string {
-    const email = localStorage.getItem('user_email');
-    return email ? email : '';
+    return localStorage.getItem('user_email') || '';
   }
 
-  // Keep all your previous theme and menu toggle functions down here unchanged...
+  toggleProfileDropdown(event: Event): void {
+    event.stopPropagation(); // Prevents HostListener from closing it immediately
+    this.isProfileDropdownOpen = !this.isProfileDropdownOpen;
+    this.isMobileMenuOpen = false; // Ensure mobile menu is closed
+  }
+
+  logout(): void {
+    localStorage.removeItem('zari_token');
+    localStorage.removeItem('user_email');
+    this.isProfileDropdownOpen = false;
+    this.router.navigate(['/']);
+  }
+
+  // ... (Keep your existing Theme and Mobile menu functions below)
   private initializeThemeState(): void {
     const savedTheme = localStorage.getItem('app-theme');
-    if (savedTheme) {
-      this.isDarkMode = savedTheme === 'dark';
-    } else {
-      this.isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    }
+    this.isDarkMode = savedTheme ? savedTheme === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
     this.updateBodyTagClass();
   }
 
@@ -43,31 +62,17 @@ export class HeaderComponent implements OnInit {
   }
 
   private updateBodyTagClass(): void {
-    const bodyElement = document.body;
-    if (this.isDarkMode) {
-      bodyElement.classList.add('dark-theme');
-      bodyElement.classList.remove('light-theme');
-    } else {
-      bodyElement.classList.add('light-theme');
-      bodyElement.classList.remove('dark-theme');
-    }
+    document.body.classList.toggle('dark-theme', this.isDarkMode);
+    document.body.classList.toggle('light-theme', !this.isDarkMode);
   }
 
   toggleMobileMenu(): void {
     this.isMobileMenuOpen = !this.isMobileMenuOpen;
-    this.manageViewportScrolling();
+    document.body.style.overflow = this.isMobileMenuOpen ? 'hidden' : '';
   }
 
   closeMobileMenu(): void {
     this.isMobileMenuOpen = false;
-    this.manageViewportScrolling();
-  }
-
-  private manageViewportScrolling(): void {
-    if (this.isMobileMenuOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
+    document.body.style.overflow = '';
   }
 }
