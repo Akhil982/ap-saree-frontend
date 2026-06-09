@@ -62,4 +62,16 @@
     </div>
 
   </div>
+
+  <div class="mobile-navigation-drawer" [class.drawer-open]="isMobileMenuOpen">
+    <div class="mobile-drawer-backdrop" (click)="closeMobileMenu()"></div>
+    <nav class="mobile-drawer-content">
+      <ul class="mobile-nav-links">
+        <li><a routerLink="/catalog" [queryParams]="{category: 'all'}" routerLinkActive="active-link" (click)="closeMobileMenu()">All Sarees</a></li>
+        <li><a routerLink="/catalog" [queryParams]="{category: 'banarasi'}" routerLinkActive="active-link" (click)="closeMobileMenu()">Banarasi</a></li>
+        <li><a routerLink="/catalog" [queryParams]="{category: 'kanchipuram'}" routerLinkActive="active-link" (click)="closeMobileMenu()">Kanchipuram</a></li>
+        <li><a routerLink="/catalog" [queryParams]="{category: 'linen'}" routerLinkActive="active-link" (click)="closeMobileMenu()">Linen & Cotton</a></li>
+      </ul>
+    </nav>
+  </div>
 </header>
