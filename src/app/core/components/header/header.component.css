@@ -1,5 +1,4 @@
-/* 💡 FIXED: Importing 'Playfair Display' for the high-contrast thick/thin luxury logo font */
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Inter:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600&display=swap');
 
 .site-header {
   background-color: var(--bg-primary, #fbfaf7);
@@ -18,18 +17,20 @@
   justify-content: space-between;
   width: 100%;
   max-width: 100vw;
-  height: 90px; /* Generous luxury height matching reference */
+  height: 90px; 
   padding: 0 2rem;
   margin: 0 auto;
   box-sizing: border-box;
+  gap: 1.5rem; /* Guarantees layout blocks never crash into each other */
   
   @media (min-width: 1400px) {
     padding: 0 4rem;
   }
 
   @media (max-width: 1024px) {
-    height: 70px;
-    padding: 0 1.25rem;
+    height: 75px;
+    padding: 0 1rem;
+    gap: 0.75rem; /* Tightens alignment padding gaps for smaller tablets */
   }
 }
 
@@ -40,12 +41,11 @@
   flex-shrink: 0;
   
   .logo {
-    /* 💡 FIXED: Configured exactly to match the high-contrast, thick-and-thin strokes from the image */
-    font-family: 'Playfair Display', 'Didot', 'Bodoni MT', serif;
-    font-size: 1.85rem;          /* Boosted sizing to show off the editorial typeface strokes */
-    font-weight: 700;            /* Heavy weight to create the dramatic thick/thin contrast */
+    font-family: 'Playfair Display', 'Didot', serif;
+    font-size: 1.85rem;          
+    font-weight: 700;            
     text-transform: uppercase; 
-    letter-spacing: 2.5px;       /* Tighter tracking matching the reference image's branding profile */
+    letter-spacing: 2.5px;       
     text-decoration: none;
     color: var(--text-primary, #3d0c1b);
     display: flex;
@@ -55,18 +55,22 @@
     .luxury-dot {
       color: var(--accent, #a22a45);
       margin-left: 2px;
-      font-size: 2.2rem;         /* Slightly enlarged to anchor the branding line gracefully */
+      font-size: 2.2rem;         
       line-height: 0;
     }
 
     @media (max-width: 1200px) {
-      font-size: 1.5rem;
+      font-size: 1.45rem;
       letter-spacing: 1.5px;
     }
 
-    @media (max-width: 480px) {
-      font-size: 5.2vw;          /* Scales cleanly down on mobile viewports */
+    @media (max-width: 640px) {
+      font-size: 1.15rem; /* Keeps logo legible on small screens without shifting elements */
       letter-spacing: 0.5px;
+      
+      .luxury-dot {
+        font-size: 1.5rem;
+      }
     }
   }
 }
@@ -76,11 +80,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-grow: 1;
-  padding: 0 1.5rem;
   
   @media (max-width: 1024px) {
-    display: none; 
+    display: none; /* Safely moves out of mobile sight lines */
   }
 
   ul {
@@ -101,7 +103,7 @@
       letter-spacing: 0.2px;
       padding: 0.5rem 0;
       opacity: 0.85;
-      transition: opacity 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+      transition: opacity 0.25s ease;
       white-space: nowrap;
 
       &:hover, &.active-link {
@@ -112,15 +114,91 @@
   }
 }
 
+/* --- 🌟 FLUID SEARCH BOX ENGINE --- */
+.search-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background-color: var(--bg-surface, #f4f1ea);
+  border-radius: 8px; 
+  padding: 2px 4px 2px 14px;
+  border: 1px solid transparent;
+  transition: all 0.3s ease;
+  flex-grow: 1;
+  max-width: 320px; /* Limits size on ultra-wide desktop monitors */
+
+  &:focus-within {
+    background-color: #ffffff;
+    border-color: rgba(61, 12, 27, 0.2);
+  }
+
+  @media (max-width: 1024px) {
+    max-width: none; /* Allows flexibility to auto-fill spacing gaps on mobile screens */
+    padding-left: 10px;
+  }
+
+  @media (max-width: 480px) {
+    /* Compress input structure to allow everything to sit comfortably in a single row */
+    padding-left: 8px;
+    border-radius: 6px;
+  }
+
+  input {
+    background: none;
+    border: none;
+    outline: none;
+    color: var(--text-primary, #3d0c1b);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    height: 36px;
+    width: 100%; /* Spans dynamically across available space */
+    padding: 0;
+
+    &::placeholder {
+      color: var(--text-muted, #9a888c);
+    }
+
+    @media (max-width: 480px) {
+      font-size: 0.78rem;
+      height: 32px;
+    }
+  }
+
+  .search-submit-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    color: var(--text-primary, #3d0c1b);
+
+    .nav-svg-icon {
+      width: 18px;
+      height: 18px;
+      
+      @media (max-width: 480px) {
+        width: 15px;
+        height: 15px;
+      }
+    }
+  }
+}
+
 /* --- Right Action Deck Panel --- */
 .header-actions {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: 1.25rem;
   flex-shrink: 0;
 
   @media (max-width: 1024px) {
-    gap: 0.85rem;
+    gap: 0.5rem; /* Prevents icons from shifting off-screen on narrow devices */
+  }
+  
+  @media (max-width: 480px) {
+    gap: 0.25rem;
   }
 
   .action-btn {
@@ -138,6 +216,10 @@
     &:hover {
       background-color: rgba(61, 12, 27, 0.04);
     }
+    
+    @media (max-width: 480px) {
+      padding: 4px;
+    }
   }
 
   .nav-svg-icon {
@@ -149,62 +231,10 @@
       width: 20px;
       height: 20px;
     }
-  }
-}
-
-/* --- Search Engine Input Context --- */
-.search-box {
-  position: relative;
-  display: flex;
-  align-items: center;
-  background-color: var(--bg-surface, #f4f1ea);
-  border-radius: 8px; 
-  padding: 2px 4px 2px 14px;
-  border: 1px solid transparent;
-  transition: border-color 0.3s ease, background-color 0.3s ease;
-
-  @media (max-width: 768px) {
-    display: none; 
-  }
-
-  &:focus-within {
-    background-color: #ffffff;
-    border-color: rgba(61, 12, 27, 0.2);
-  }
-
-  input {
-    background: none;
-    border: none;
-    outline: none;
-    color: var(--text-primary, #3d0c1b);
-    font-family: 'Inter', sans-serif;
-    font-size: 0.85rem;
-    height: 36px;
-    width: 210px;
-    padding: 0;
-
-    &::placeholder {
-      color: var(--text-muted, #9a888c);
-    }
     
-    @media (max-width: 1200px) {
-      width: 160px;
-    }
-  }
-
-  .search-submit-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 6px;
-    color: var(--text-primary, #3d0c1b);
-
-    .nav-svg-icon {
-      width: 18px;
-      height: 18px;
+    @media (max-width: 480px) {
+      width: 19px;
+      height: 19px;
     }
   }
 }
@@ -219,20 +249,22 @@
   border: none;
   height: 38px;
   padding: 0 16px;
-  border-radius: 30px; /* Clean capsule borders */
+  border-radius: 30px; 
   cursor: pointer;
   font-family: 'Inter', sans-serif;
   font-size: 0.8rem;
   font-weight: 500;
   transition: opacity 0.2s ease;
 
-  &:hover {
-    opacity: 0.95;
-  }
+  &:hover { opacity: 0.95; }
 
   @media (max-width: 1024px) {
     height: 32px;
-    padding: 0 10px;
+    padding: 0;
+    width: 32px; /* Drops standard block layouts down to neat matching round circles */
+    justify-content: center;
+    border-radius: 50%;
+    
     .theme-text { display: none; } 
   }
 
@@ -240,6 +272,11 @@
     width: 15px;
     height: 15px;
     stroke: currentColor;
+    
+    @media (max-width: 1024px) {
+      width: 16px;
+      height: 16px;
+    }
   }
 }
 
@@ -249,44 +286,8 @@
   display: flex;
   align-items: center;
 
-  &:hover {
-    .identity-popover-badge {
-      opacity: 1;
-      transform: translate(-50%, 0);
-      visibility: visible;
-    }
-  }
-
-  .identity-popover-badge {
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translate(-50%, 5px);
-    background-color: #ffffff;
-    color: #111111;
-    font-family: 'Inter', sans-serif;
-    font-size: 0.8rem;
-    padding: 8px 14px;
-    border-radius: 6px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-    border: 1px solid rgba(0, 0, 0, 0.05);
-    white-space: nowrap;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.25s cubic-bezier(0.25, 1, 0.5, 1);
-    z-index: 1010;
-    margin-top: 8px;
-
-    &::before {
-      content: '';
-      position: absolute;
-      bottom: 100%;
-      left: 50%;
-      transform: translateX(-50%);
-      border-width: 6px;
-      border-style: solid;
-      border-color: transparent transparent #ffffff transparent;
-    }
+  @media (max-width: 640px) {
+    display: none; /* Streamlines design constraints by sliding email profile details to the mobile menu drawer */
   }
 }
 
@@ -312,6 +313,12 @@
     padding: 0 4px;
     box-sizing: border-box;
     border: 2px solid var(--bg-primary, #fbfaf7);
+    
+    @media (max-width: 480px) {
+      min-width: 15px;
+      height: 15px;
+      font-size: 0.58rem;
+    }
   }
 }
 
@@ -321,7 +328,7 @@
   border: none;
   cursor: pointer;
   padding: 8px;
-  margin-right: 0.5rem;
+  margin-right: 0.25rem;
   display: none;
   align-items: center;
   justify-content: center;
@@ -329,10 +336,15 @@
   @media (max-width: 1024px) {
     display: flex;
   }
+  
+  @media (max-width: 480px) {
+    padding: 4px;
+    margin-right: 0;
+  }
 
   .hamburger-bar {
     display: block;
-    width: 22px;
+    width: 20px;
     height: 2px;
     background-color: var(--text-primary, #3d0c1b);
     position: relative;
@@ -341,7 +353,7 @@
     &::before, &::after {
       content: '';
       position: absolute;
-      width: 22px;
+      width: 20px;
       height: 2px;
       background-color: var(--text-primary, #3d0c1b);
       left: 0;
